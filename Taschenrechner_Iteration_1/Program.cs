@@ -28,6 +28,7 @@ namespace Taschenrechner_Iteration_1
             // Ausgabe
             Console.WriteLine("Die Summe ist: {0}", summe);
             Console.ReadLine();
+            //speckbohnen
         }
     }
 }
