@@ -23,12 +23,23 @@ namespace Taschenrechner
             float zweiterSummandAlsZahl = Convert.ToSingle(zweiterSummand);
 
             // Berechnung
-            float summe = ersterSummandAlsZahl + zweiterSummandAlsZahl;
+            Addiere(ersterSummandAlsZahl, zweiterSummandAlsZahl);
 
             // Ausgabe
             Console.WriteLine("Die Summe ist: {0}", summe);
+            WarteAufBenutzerEingabe();
+        }
+
+        static double Addiere(double ersterSummand, double zweiterSummand)
+        {
+            double summe = ersterSummand + zweiterSummand;
+            return summe;
+        }
+
+        static void WarteAufBenutzerEingabe()
+        {
+            Console.Write("Zum Beenden bitte Return drücken!");
             Console.ReadLine();
-            //speckbohnen
         }
     }
 }
