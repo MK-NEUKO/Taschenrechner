@@ -40,6 +40,12 @@ namespace Taschenrechner
             WarteAufBenutzerEingabe();
         }
 
+        static double Subtrahieren(double minuend, double subtrahend)
+        {
+            double differenz = minuend - subtrahend;
+            return differenz;
+        }
+
         static string HoleSummanden(string ausgabeText)
         {
             Console.Write(ausgabeText);
