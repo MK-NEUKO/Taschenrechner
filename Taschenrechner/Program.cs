@@ -24,20 +24,20 @@ namespace Taschenrechner
             //Titel: Addieren
             //Story: Als Benutzer möchte ich zwei Gleitkommazahlen eingeben, um die Summe berechnen zu lassen.
 
-            string ersterSummand = HoleSummanden("Bitte den ersten Summanden eingeben: ");
-            string zweiterSummand = HoleSummanden("Bitte den zweiten Summanden eingeben: ");
+            string ersteZahlAlsString = HoleBenutzerEingabe("Bitte den ersten Summanden eingeben: ");
+            string zweiteZahlAlsString = HoleBenutzerEingabe("Bitte den zweiten Summanden eingeben: ");
 
             // Wandle Text in Gleitkommazahl
             // TODO: Auslagern in Methode, wenn Struktur umfangreicher geworden ist
-            double ersterSummandAlsZahl = Convert.ToDouble(ersterSummand);
-            double zweiterSummandAlsZahl = Convert.ToDouble(zweiterSummand);
+            double ersteZahl = Convert.ToDouble(ersteZahlAlsString);
+            double zweiteZahl = Convert.ToDouble(zweiteZahlAlsString);
 
             // Berechnung ausführen
-            double summe = Addiere(ersterSummandAlsZahl, zweiterSummandAlsZahl);
+            double summe = Addiere(ersteZahl, zweiteZahl);
 
             // Ausgabe
             Console.WriteLine("Die Summe ist: {0}", summe);
-            WarteAufBenutzerEingabe();
+            HoleBenutzerEingabe("Zum Beenden bitte Return drücken!");
         }
 
         static double Subtrahieren(double minuend, double subtrahend)
@@ -46,7 +46,7 @@ namespace Taschenrechner
             return differenz;
         }
 
-        static string HoleSummanden(string ausgabeText)
+        static string HoleBenutzerEingabe(string ausgabeText)
         {
             Console.Write(ausgabeText);
             string summand = Console.ReadLine();
@@ -60,10 +60,5 @@ namespace Taschenrechner
             return summe;
         }
 
-        static void WarteAufBenutzerEingabe()
-        {
-            Console.Write("Zum Beenden bitte Return drücken!");
-            Console.ReadLine();
-        }
     }
 }
