@@ -26,6 +26,7 @@ namespace Taschenrechner
 
             string ersteZahlAlsString = HoleBenutzerEingabe("Bitte den ersten Summanden eingeben: ");
             string zweiteZahlAlsString = HoleBenutzerEingabe("Bitte den zweiten Summanden eingeben: ");
+            string operatíon = HoleBenutzerEingabe("Bitte die entsprechende Rechenoperation wählen (+ / -): ")
 
             // Wandle Text in Gleitkommazahl
             // TODO: Auslagern in Methode, wenn Struktur umfangreicher geworden ist
