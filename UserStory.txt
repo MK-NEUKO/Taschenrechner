@@ -2,12 +2,21 @@ User Stories Taschenrechner
 
 User Stories Vorlage: Als <Rolle/Anwendertyp> möchte ich <Ziel/Wunsch/Funktion> um <Nutzen>
 
+Titel:
+Story:
+Akzeptanzkriterien:
+	* 
+Status:
+	* 
+
+
 Titel:	Softwarestruktur
 Story:	Als Entwickler möchte ich den Quellcode sauber strukturieren, um später weitere Funktionalität hizufügen zu können.
 Akzeptanzkriterien:
 	* Das Single Level of Abstraction Prinzip wird eingehalten, oder eine Abweichung ist begründet und dokumentiert.
 Status:
-	* Offen
+	* Umgesetzt
+	* Erledigt
 
 Titel:	Subtrahieren
 Story:	Als Benutzer möchte ich zwei Zahlen eingeben, um deren Differenz berechnen zu lassen.
