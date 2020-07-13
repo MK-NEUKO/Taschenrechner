@@ -26,7 +26,7 @@ namespace Taschenrechner
 
             string ersteZahlAlsString = HoleBenutzerEingabe("Bitte den ersten Summanden eingeben: ");
             string zweiteZahlAlsString = HoleBenutzerEingabe("Bitte den zweiten Summanden eingeben: ");
-            string operatíon = HoleBenutzerEingabe("Bitte die entsprechende Rechenoperation wählen (+ / -): ")
+            string operatíon = HoleBenutzerEingabe("Bitte die entsprechende Rechenoperation wählen (+ / -): ");
 
             // Wandle Text in Gleitkommazahl
             // TODO: Auslagern in Methode, wenn Struktur umfangreicher geworden ist
@@ -34,10 +34,24 @@ namespace Taschenrechner
             double zweiteZahl = Convert.ToDouble(zweiteZahlAlsString);
 
             // Berechnung ausführen
-            double summe = Addiere(ersteZahl, zweiteZahl);
+            double resultat = 0;
+            if (operatíon == "+")
+            {
+                resultat = Addiere(ersteZahl, zweiteZahl);
+                Console.WriteLine("Die Summe ist: {0}", resultat);
+            }
+            else if (operatíon == "-")
+            {
+                resultat = Subtrahieren(ersteZahl, zweiteZahl);
+                Console.WriteLine("Die Differenz ist: {0}", resultat);
+            }
+            else
+            {
+                Console.WriteLine("Du hast eine ungültige Auswahl der Operation getroffen!");
+            }
+            
 
             // Ausgabe
-            Console.WriteLine("Die Summe ist: {0}", summe);
             HoleBenutzerEingabe("Zum Beenden bitte Return drücken!");
         }
 
