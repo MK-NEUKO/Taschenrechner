@@ -26,7 +26,7 @@ namespace Taschenrechner
 
             string ersteZahlAlsString = HoleBenutzerEingabe("Bitte die erste Zahl eingeben: ");
             string zweiteZahlAlsString = HoleBenutzerEingabe("Bitte die zweite Zahl eingeben: ");
-            string operatíon = HoleBenutzerEingabe("Bitte die entsprechende Rechenoperation wählen ( + | - | * | / ): ");
+            string operation = HoleBenutzerEingabe("Bitte die entsprechende Rechenoperation wählen ( + | - | * | / ): ");
 
             // Wandle Text in Gleitkommazahl
             // TODO: Auslagern in Methode, wenn Struktur umfangreicher geworden ist
@@ -34,35 +34,11 @@ namespace Taschenrechner
             double zweiteZahl = Convert.ToDouble(zweiteZahlAlsString);
 
             // Berechnung ausführen
-            double resultat = 0;
-            switch (operatíon)
-            {
-                case "+":
-                    resultat = Addiere(ersteZahl, zweiteZahl);
-                    Console.WriteLine("Die Summe ist: {0}", resultat);
-                    break;
+            double resultat = Berechne(ersteZahl, zweiteZahl, operation);
 
-                case "-":
-                    resultat = Subtrahieren(ersteZahl, zweiteZahl);
-                    Console.WriteLine("Die Differenz ist: {0}", resultat);
-                    break;
 
-                case "/":
-                    resultat = Dividieren(ersteZahl, zweiteZahl);
-                    Console.WriteLine("Der Quotient ist: {0}", resultat);
-                    break;
-
-                case "*":
-                    resultat = Multiplizieren(ersteZahl, zweiteZahl);
-                    Console.WriteLine("Das Produkt ist: {0}", resultat);
-                    break;
-
-                default:
-                    Console.WriteLine("Du hast eine ungültige Auswahl der Operation getroffen!");
-                    break;
-            }
-          
             // Ausgabe
+            Ausgeben(resultat, operation);
             HoleBenutzerEingabe("Zum Beenden bitte Return drücken!");
         }
 
@@ -97,6 +73,60 @@ namespace Taschenrechner
         {
             double quotient = divident / divisor;
             return quotient;
+        }
+
+        static double Berechne(double ersteZahl, double zweiteZahl, string operation)
+        {
+            double resultat = 0;
+            switch (operation)
+            {
+                case "+":
+                    resultat = Addiere(ersteZahl, zweiteZahl);
+                    break;
+
+                case "-":
+                    resultat = Subtrahieren(ersteZahl, zweiteZahl);
+                    break;
+
+                case "/":
+                    resultat = Dividieren(ersteZahl, zweiteZahl);
+                    break;
+
+                case "*":
+                    resultat = Multiplizieren(ersteZahl, zweiteZahl);
+                    break;
+
+                default:
+                    Console.WriteLine("Du hast eine ungültige Auswahl der Operation getroffen!");
+                    break;
+            }
+            return resultat;
+        }
+
+        static void Ausgeben(double resultat, string operation)
+        {
+            switch (operation)
+            {
+                case "+":
+                    Console.WriteLine("Die Summe ist: {0}", resultat);
+                    break;
+
+                case "-":
+                    Console.WriteLine("Die Differenz ist: {0}", resultat);
+                    break;
+
+                case "/":
+                    Console.WriteLine("Der Quotient ist: {0}", resultat);
+                    break;
+
+                case "*":
+                    Console.WriteLine("Das Produkt ist: {0}", resultat);
+                    break;
+
+                default:
+                    Console.WriteLine("Du hast eine ungültige Auswahl der Operation getroffen!");
+                    break;
+            }
         }
     }
 }
