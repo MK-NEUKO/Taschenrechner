@@ -24,9 +24,9 @@ namespace Taschenrechner
             //Titel: Addieren
             //Story: Als Benutzer möchte ich zwei Gleitkommazahlen eingeben, um die Summe berechnen zu lassen.
 
-            string ersteZahlAlsString = HoleBenutzerEingabe("Bitte den ersten Summanden eingeben: ");
-            string zweiteZahlAlsString = HoleBenutzerEingabe("Bitte den zweiten Summanden eingeben: ");
-            string operatíon = HoleBenutzerEingabe("Bitte die entsprechende Rechenoperation wählen (+ / -): ");
+            string ersteZahlAlsString = HoleBenutzerEingabe("Bitte die erste Zahl eingeben: ");
+            string zweiteZahlAlsString = HoleBenutzerEingabe("Bitte die zweite Zahl eingeben: ");
+            string operatíon = HoleBenutzerEingabe("Bitte die entsprechende Rechenoperation wählen ( + | - | * | / ): ");
 
             // Wandle Text in Gleitkommazahl
             // TODO: Auslagern in Methode, wenn Struktur umfangreicher geworden ist
@@ -48,8 +48,13 @@ namespace Taschenrechner
                     break;
 
                 case "/":
+                    resultat = Dividieren(ersteZahl, zweiteZahl);
+                    Console.WriteLine("Der Quotient ist: {0}", resultat);
+                    break;
+
                 case "*":
-                    Console.WriteLine("Diese OPeration wird bald unterstützt, Versprochen ;-)");
+                    resultat = Multiplizieren(ersteZahl, zweiteZahl);
+                    Console.WriteLine("Das Produkt ist: {0}", resultat);
                     break;
 
                 default:
@@ -61,11 +66,6 @@ namespace Taschenrechner
             HoleBenutzerEingabe("Zum Beenden bitte Return drücken!");
         }
 
-        static double Subtrahieren(double minuend, double subtrahend)
-        {
-            double differenz = minuend - subtrahend;
-            return differenz;
-        }
 
         static string HoleBenutzerEingabe(string ausgabeText)
         {
@@ -75,11 +75,28 @@ namespace Taschenrechner
             return summand;
         }
 
+        static double Subtrahieren(double minuend, double subtrahend)
+        {
+            double differenz = minuend - subtrahend;
+            return differenz;
+        }
+
         static double Addiere(double ersterSummand, double zweiterSummand)
         {
             double summe = ersterSummand + zweiterSummand;
             return summe;
         }
 
+        static double Multiplizieren(double ersterFaktor, double zweiterFaktor)
+        {
+            double produkt = ersterFaktor * zweiterFaktor;
+            return produkt;
+        }
+
+        static double Dividieren(double divident, double divisor)
+        {
+            double quotient = divident / divisor;
+            return quotient;
+        }
     }
 }

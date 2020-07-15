@@ -10,7 +10,7 @@ Status:
 	* 
 
 
-Titel:	Softwarestruktur
+	Titel:	Softwarestruktur
 Story:	Als Entwickler möchte ich den Quellcode sauber strukturieren, um später weitere Funktionalität hizufügen zu können.
 Akzeptanzkriterien:
 	* Das Single Level of Abstraction Prinzip wird eingehalten, oder eine Abweichung ist begründet und dokumentiert.
@@ -18,12 +18,36 @@ Status:
 	* Umgesetzt
 	* Erledigt
 
+
+Titel:	Dividieren
+Story:	Als Benutzer möchte ich zwei Zahlen eingeben, um deren Produkt berechnen zu lassen.
+Akzeptanzkriterien:
+	* Gleitkommazahlen zwischen -10,0 und 100,0 können berechnet werden
+Status:
+	* Implemantiert
+	* Getestet
+	* Erledigt
+
+
+Titel:	Multiplizieren
+Story:	Als Benutzer möchte ich zwei Zahlen eingeben, um deren Produkt berechnen zu lassen.
+Akzeptanzkriterien:
+	* Gleitkommazahlen zwischen -10,0 und 100,0 können berechnet werden
+Status:
+	* Implemantiert
+	* Getestet
+	* Erledigt
+
+
 Titel:	Subtrahieren
 Story:	Als Benutzer möchte ich zwei Zahlen eingeben, um deren Differenz berechnen zu lassen.
 Akzeptanzkriterien:
 	* Gleitkommazahlen zwischen -10,0 und 100,0 können berechnet werden
 Status:
-	* Offen
+	* Implemantiert
+	* Getestet
+	* Erledigt
+
 
 Titel: Addieren 
 Story: Als Benutzer möchte ich zwei Gleitkommazahlen eingeben, um die Summe berechnen zu lassen.
@@ -34,6 +58,7 @@ Status:
 	* Getestet
 	* Erledigt
 	
+
 Titel: Starten
 Story: Als Benutzer möchte ich den Taschenrechner schnell aufrufen können, um ein Resultat schnell zu bekommen.
 Akzeptanzkriterien:
