@@ -34,7 +34,8 @@ namespace Taschenrechner
             double zweiteZahl = Convert.ToDouble(zweiteZahlAlsString);
 
             // Berechnung ausführen
-            double resultat = Berechne(ersteZahl, zweiteZahl, operation);
+            RechnerModel model = new RechnerModel();
+            double resultat = model.Berechne(ersteZahl, zweiteZahl, operation);
 
 
             // Ausgabe
@@ -51,57 +52,7 @@ namespace Taschenrechner
             return summand;
         }
 
-        static double Subtrahieren(double minuend, double subtrahend)
-        {
-            double differenz = minuend - subtrahend;
-            return differenz;
-        }
-
-        static double Addiere(double ersterSummand, double zweiterSummand)
-        {
-            double summe = ersterSummand + zweiterSummand;
-            return summe;
-        }
-
-        static double Multiplizieren(double ersterFaktor, double zweiterFaktor)
-        {
-            double produkt = ersterFaktor * zweiterFaktor;
-            return produkt;
-        }
-
-        static double Dividieren(double divident, double divisor)
-        {
-            double quotient = divident / divisor;
-            return quotient;
-        }
-
-        static double Berechne(double ersteZahl, double zweiteZahl, string operation)
-        {
-            double resultat = 0;
-            switch (operation)
-            {
-                case "+":
-                    resultat = Addiere(ersteZahl, zweiteZahl);
-                    break;
-
-                case "-":
-                    resultat = Subtrahieren(ersteZahl, zweiteZahl);
-                    break;
-
-                case "/":
-                    resultat = Dividieren(ersteZahl, zweiteZahl);
-                    break;
-
-                case "*":
-                    resultat = Multiplizieren(ersteZahl, zweiteZahl);
-                    break;
-
-                default:
-                    Console.WriteLine("Du hast eine ungültige Auswahl der Operation getroffen!");
-                    break;
-            }
-            return resultat;
-        }
+        
 
         static void Ausgeben(double resultat, string operation)
         {
