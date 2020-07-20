@@ -24,9 +24,10 @@ namespace Taschenrechner
             //Titel: Addieren
             //Story: Als Benutzer möchte ich zwei Gleitkommazahlen eingeben, um die Summe berechnen zu lassen.
 
-            string ersteZahlAlsString = HoleBenutzerEingabe("Bitte die erste Zahl eingeben: ");
-            string zweiteZahlAlsString = HoleBenutzerEingabe("Bitte die zweite Zahl eingeben: ");
-            string operation = HoleBenutzerEingabe("Bitte die entsprechende Rechenoperation wählen ( + | - | * | / ): ");
+            ConsoleView view = new ConsoleView();
+            string ersteZahlAlsString = view.HoleBenutzerEingabe("Bitte die erste Zahl eingeben: ");
+            string zweiteZahlAlsString = view.HoleBenutzerEingabe("Bitte die zweite Zahl eingeben: ");
+            string operation = view.HoleBenutzerEingabe("Bitte die entsprechende Rechenoperation wählen ( + | - | * | / ): ");
 
             // Wandle Text in Gleitkommazahl
             // TODO: Auslagern in Methode, wenn Struktur umfangreicher geworden ist
@@ -39,45 +40,11 @@ namespace Taschenrechner
 
 
             // Ausgabe
-            Ausgeben(model.Resultat, operation);
-            HoleBenutzerEingabe("Zum Beenden bitte Return drücken!");
+            view.GebeResultatAus(model.Resultat, operation);
+            view.HoleBenutzerEingabe("Zum Beenden bitte Return drücken!");
         }
 
-
-        static string HoleBenutzerEingabe(string ausgabeText)
-        {
-            Console.Write(ausgabeText);
-            string summand = Console.ReadLine();
-
-            return summand;
-        }
 
         
-
-        static void Ausgeben(double resultat, string operation)
-        {
-            switch (operation)
-            {
-                case "+":
-                    Console.WriteLine("Die Summe ist: {0}", resultat);
-                    break;
-
-                case "-":
-                    Console.WriteLine("Die Differenz ist: {0}", resultat);
-                    break;
-
-                case "/":
-                    Console.WriteLine("Der Quotient ist: {0}", resultat);
-                    break;
-
-                case "*":
-                    Console.WriteLine("Das Produkt ist: {0}", resultat);
-                    break;
-
-                default:
-                    Console.WriteLine("Du hast eine ungültige Auswahl der Operation getroffen!");
-                    break;
-            }
-        }
     }
 }
