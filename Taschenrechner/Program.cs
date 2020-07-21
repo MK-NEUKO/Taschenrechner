@@ -21,10 +21,9 @@ namespace Taschenrechner
 
         static void Main(string[] args)
         {
-            //Titel: Addieren
-            //Story: Als Benutzer möchte ich zwei Gleitkommazahlen eingeben, um die Summe berechnen zu lassen.
-
-            ConsoleView view = new ConsoleView();
+            
+            RechnerModel model = new RechnerModel();
+            ConsoleView view = new ConsoleView(model);
             string ersteZahlAlsString = view.HoleBenutzerEingabe("Bitte die erste Zahl eingeben: ");
             string zweiteZahlAlsString = view.HoleBenutzerEingabe("Bitte die zweite Zahl eingeben: ");
             string operation = view.HoleBenutzerEingabe("Bitte die entsprechende Rechenoperation wählen ( + | - | * | / ): ");
@@ -35,12 +34,12 @@ namespace Taschenrechner
             double zweiteZahl = Convert.ToDouble(zweiteZahlAlsString);
 
             // Berechnung ausführen
-            RechnerModel model = new RechnerModel();
+            
             model.Berechne(ersteZahl, zweiteZahl, operation);
 
 
             // Ausgabe
-            view.GebeResultatAus(model.Resultat, operation);
+            view.GibResultatAus(operation);
             view.HoleBenutzerEingabe("Zum Beenden bitte Return drücken!");
         }
 

@@ -8,6 +8,13 @@ namespace Taschenrechner
 {
     class ConsoleView
     {
+        private RechnerModel model;
+
+        public ConsoleView(RechnerModel model)
+        {
+            this.model = model;
+        }
+
         public string HoleBenutzerEingabe(string ausgabeText)
         {
             Console.Write(ausgabeText);
@@ -17,24 +24,24 @@ namespace Taschenrechner
         }
 
 
-        public void GebeResultatAus(double resultat, string operation)
+        public void GibResultatAus(string operation)
         {
             switch (operation)
             {
                 case "+":
-                    Console.WriteLine("Die Summe ist: {0}", resultat);
+                    Console.WriteLine("Die Summe ist: {0}", model.Resultat);
                     break;
 
                 case "-":
-                    Console.WriteLine("Die Differenz ist: {0}", resultat);
+                    Console.WriteLine("Die Differenz ist: {0}", model.Resultat);
                     break;
 
                 case "/":
-                    Console.WriteLine("Der Quotient ist: {0}", resultat);
+                    Console.WriteLine("Der Quotient ist: {0}", model.Resultat);
                     break;
 
                 case "*":
-                    Console.WriteLine("Das Produkt ist: {0}", resultat);
+                    Console.WriteLine("Das Produkt ist: {0}", model.Resultat);
                     break;
 
                 default:
