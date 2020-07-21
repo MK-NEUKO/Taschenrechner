@@ -15,6 +15,24 @@ namespace Taschenrechner
             this.model = model;
         }
 
+        public string HohleZahlVomBenutzer()
+        {
+            Console.Write("Bitte gib die Zahl für die Brechnung ein: ");
+            return Console.ReadLine();
+        }
+
+        public string HoleOperatorVomBenutzer()
+        {
+            Console.Write("Bitte die ausführende Operation ein ( + | - | * | / ): ");
+            return Console.ReadLine();
+        }
+
+        public void WarteAufEndeDurchBenutzer()
+        {
+            Console.Write("Zum Beenden bitte Return drücken!");
+            Console.ReadLine();
+        }
+
         public string HoleBenutzerEingabe(string ausgabeText)
         {
             Console.Write(ausgabeText);
