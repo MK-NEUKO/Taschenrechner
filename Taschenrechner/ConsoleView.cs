@@ -10,23 +10,48 @@ namespace Taschenrechner
     {
         private RechnerModel model;
 
+
         public ConsoleView(RechnerModel model)
         {
             this.model = model;
+            BenutzerWillBeenden = false;
         }
+
+        public bool BenutzerWillBeenden { get; private set; }
+        
 
         public double HohleZahlVomBenutzer()
         {
-            string zahl;
-            Console.Write("Bitte gib die Zahl für die Brechnung ein: ");
-            zahl = Console.ReadLine();
+            string eingabe;
+            Console.Write("Bitte eine Zahl für die Brechnung eingeben (FERTIG zum Beenden): ");
+            eingabe = Console.ReadLine();
 
-            return Convert.ToDouble(zahl);
+            if (eingabe == "FERTIG")
+            {
+                BenutzerWillBeenden = true;
+                eingabe = "0,0";
+            }
+
+            return Convert.ToDouble(eingabe);
         }
 
-        public string HoleOperatorVomBenutzer()
+        public void HohleWeitereEingabenVomBenutzer()
         {
-            Console.Write("Bitte die ausführende Operation ein ( + | - | * | / ): ");
+            model.ErsteZahl = model.Resultat;
+            model.Operation = HohleOperatorVomBenutzer();
+            model.ZweiteZahl = HohleZahlVomBenutzer();
+        }
+
+        public void HohleEingabeVomBenutzer()
+        {
+            model.ErsteZahl = HohleZahlVomBenutzer();
+            model.Operation = HohleOperatorVomBenutzer();
+            model.ZweiteZahl = HohleZahlVomBenutzer();
+        }
+
+        private string HohleOperatorVomBenutzer()
+        {
+            Console.Write("Bitte die gewünschte Operation wählen ( + | - | * | / ): ");
             return Console.ReadLine();
         }
 
@@ -35,15 +60,6 @@ namespace Taschenrechner
             Console.Write("Zum Beenden bitte Return drücken!");
             Console.ReadLine();
         }
-
-        public string HoleBenutzerEingabe(string ausgabeText)
-        {
-            Console.Write(ausgabeText);
-            string summand = Console.ReadLine();
-
-            return summand;
-        }
-
 
         public void GibResultatAus()
         {
