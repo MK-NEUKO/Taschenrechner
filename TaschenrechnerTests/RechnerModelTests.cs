@@ -11,11 +11,11 @@ namespace Taschenrechner.Tests
     [TestClass()]
     public class RechnerModelTests
     {
+        RechnerModel model = new RechnerModel();
+
         [TestMethod()]
         public void Berechne_DivisionDurchNull_ErgibtUnendlich()
         {
-            RechnerModel model = new RechnerModel();
-
             model.Operation = "/";
             model.ErsteZahl = 10;
             model.ZweiteZahl = 0;
@@ -23,6 +23,17 @@ namespace Taschenrechner.Tests
             model.Berechne();
 
             Assert.AreEqual(double.PositiveInfinity, model.Resultat);
+        }
+        [TestMethod]
+        public void Pruefe_AdditionAufGrenzwerte()
+        {
+            model.Operation = "+";
+            model.ErsteZahl = -10.0;
+            model.ZweiteZahl = 100.0;
+
+            model.Berechne();
+
+            Assert.AreEqual(90, model.Resultat);
         }
     }
 }

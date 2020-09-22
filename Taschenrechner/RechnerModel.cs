@@ -8,15 +8,50 @@ namespace Taschenrechner
 {
     public class RechnerModel
     {
+        public bool FalscheEingabe { get; set; }
         public double Resultat { get; private set; }
         public string Operation { get; set; }
-        public double ErsteZahl { get; set; }
-        public double ZweiteZahl { get; set; }
+
+        private double _ersteZahl;
+
+        public double ErsteZahl
+        {
+            get { return _ersteZahl; }
+            set 
+            {
+                if (ErsteZahl <= 100 && ErsteZahl >= -10)
+                {
+                    _ersteZahl = value;
+                }
+                else
+                    FalscheEingabe = true;
+                 
+            }
+        }
+
+        private double _zweiteZahl;
+
+        public double ZweiteZahl
+        {
+            get { return _zweiteZahl; }
+            set
+            {
+                if (ZweiteZahl > 100 || ZweiteZahl < -10)
+                {
+                    _zweiteZahl = value;
+                }
+                else
+                    FalscheEingabe = true;
+
+            }
+        }
+
 
         public RechnerModel()
         {
             Resultat = 0;
             Operation = "unbekannt";
+            FalscheEingabe = false;
         }
 
         public void Berechne()
@@ -45,13 +80,9 @@ namespace Taschenrechner
             }
         }
 
-        private double Subtrahiere(double minuend, double subtrahend, params double[] weitereZahlen)
+        private double Subtrahiere(double minuend, double subtrahend)
         {
             double differenz = minuend - subtrahend;
-            foreach (double zahl in weitereZahlen)
-            {
-                differenz -= zahl;
-            }
             return differenz;
         }
 

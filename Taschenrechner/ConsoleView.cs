@@ -19,12 +19,19 @@ namespace Taschenrechner
 
         public bool BenutzerWillBeenden { get; private set; }
         
-
+        private void ZeigeMenu()
+        {
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Beenden = (ENDE) | Berechnung Löschen = (C) | Aktuelle Zahl löschen = (CE) |");
+            Console.WriteLine("Operatoren = (+ | - | * | / )                                               ");
+            Console.ResetColor();
+        }
         public double HohleZahlVomBenutzer()
         {
             string eingabe;
             double zahl;
-            Console.Write("Bitte eine Zahl für die Brechnung eingeben (FERTIG zum Beenden): ");
+            Console.Write("Zahl.....: ");
             eingabe = Console.ReadLine();
 
             if (eingabe == "FERTIG")
@@ -49,6 +56,16 @@ namespace Taschenrechner
             return zahl;
         }
 
+        private void PruefeAufGueltigenWertebereich()
+        {
+            if (model.FalscheEingabe)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Die eingegebene Zahl muss zwischen -10,0 und 100,0 liegen!");
+                Console.ResetColor();
+            }
+        }
+
         public void HohleWeitereEingabenVomBenutzer()
         {
             model.ErsteZahl = model.Resultat;
@@ -58,14 +75,17 @@ namespace Taschenrechner
 
         public void HohleEingabeVomBenutzer()
         {
+            ZeigeMenu();
             model.ErsteZahl = HohleZahlVomBenutzer();
+            PruefeAufGueltigenWertebereich();
             model.Operation = HohleOperatorVomBenutzer();
             model.ZweiteZahl = HohleZahlVomBenutzer();
+
         }
 
         private string HohleOperatorVomBenutzer()
         {
-            Console.Write("Bitte die gewünschte Operation wählen ( + | - | * | / ): ");
+            Console.Write("Operator.: ");
             return Console.ReadLine();
         }
 
@@ -80,7 +100,7 @@ namespace Taschenrechner
             switch (model.Operation)
             {
                 case "+":
-                    Console.WriteLine("Die Summe ist: {0}", model.Resultat);
+                    Console.WriteLine("Ergebnis.: " + model.ErsteZahl + "+" + model.ZweiteZahl + " = " + model.Resultat);
                     break;
 
                 case "-":
