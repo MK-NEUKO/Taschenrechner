@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Taschenrechner
 {
-    class RechnerModel
+    public class RechnerModel
     {
         public double Resultat { get; private set; }
         public string Operation { get; set; }
