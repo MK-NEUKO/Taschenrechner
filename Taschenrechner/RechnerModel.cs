@@ -8,50 +8,47 @@ namespace Taschenrechner
 {
     public class RechnerModel
     {
-        public bool FalscheEingabe { get; set; }
-        public double Resultat { get; private set; }
-        public string Operation { get; set; }
-
         private double _ersteZahl;
-
-        public double ErsteZahl
-        {
-            get { return _ersteZahl; }
-            set 
-            {
-                if (ErsteZahl <= 100 && ErsteZahl >= -10)
-                {
-                    _ersteZahl = value;
-                }
-                else
-                    FalscheEingabe = true;
-                 
-            }
-        }
-
         private double _zweiteZahl;
-
-        public double ZweiteZahl
-        {
-            get { return _zweiteZahl; }
-            set
-            {
-                if (ZweiteZahl > 100 || ZweiteZahl < -10)
-                {
-                    _zweiteZahl = value;
-                }
-                else
-                    FalscheEingabe = true;
-
-            }
-        }
-
 
         public RechnerModel()
         {
             Resultat = 0;
             Operation = "unbekannt";
             FalscheEingabe = false;
+        }
+
+        public bool FalscheEingabe { get; private set; }
+        public double Resultat { get; private set; }
+        public string Operation { get; set; }
+        public double ErsteZahl
+        {
+            get { return _ersteZahl; }
+            set 
+            {
+                if (value >= -10.0 && value <= 100.0)
+                {
+                    _ersteZahl = value;
+                    FalscheEingabe = false;
+                }
+                else
+                    FalscheEingabe = true;
+            }
+        }
+
+        public double ZweiteZahl
+        {
+            get { return _zweiteZahl; }
+            set
+            {
+                if (value >= -10.0 && value <= 100.0)
+                {
+                    _zweiteZahl = value;
+                    FalscheEingabe = false;
+                }
+                else
+                    FalscheEingabe = true;            
+            }
         }
 
         public void Berechne()
@@ -75,7 +72,6 @@ namespace Taschenrechner
                     break;
 
                 default:
-                    Console.WriteLine("Du hast eine ungültige Auswahl der Operation getroffen!");
                     break;
             }
         }

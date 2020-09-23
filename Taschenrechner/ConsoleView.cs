@@ -19,12 +19,12 @@ namespace Taschenrechner
 
         public bool BenutzerWillBeenden { get; private set; }
         
-        private void ZeigeMenu()
+        public void ZeigeMenu()
         {
             Console.BackgroundColor = ConsoleColor.DarkGray;
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("Beenden = (ENDE) | Berechnung Löschen = (C) | Aktuelle Zahl löschen = (CE) |");
-            Console.WriteLine("Operatoren = (+ | - | * | / )                                               ");
+            Console.WriteLine("Beenden = (ENDE) | Berechnung Löschen = (C) | Aktuelle Zahl löschen = (CE)");
+            Console.WriteLine("Operatoren = (+ | - | * | / )                                             ");
             Console.ResetColor();
         }
         public double HohleZahlVomBenutzer()
@@ -34,7 +34,7 @@ namespace Taschenrechner
             Console.Write("Zahl.....: ");
             eingabe = Console.ReadLine();
 
-            if (eingabe == "FERTIG")
+            if (eingabe == "ENDE")
             {
                 BenutzerWillBeenden = true;
                 eingabe = "0,0";
@@ -42,45 +42,64 @@ namespace Taschenrechner
 
             while (!double.TryParse(eingabe, out zahl))
             {
+                Console.BackgroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine();
-                Console.WriteLine("Du musst eine gültige Gleitkommazahl eingeben!");
-                Console.WriteLine("Neben den Ziffern 0-9 sind lediglich die folgenden Sonderzeichen erlaubt: ,.-");
-                Console.WriteLine("Dabei muss das - als erstes Zeichen vor einer Ziffer gesetzt werden.");
-                Console.WriteLine("Der . fungiert als Trennzeichen an Tausenderstellen.");
-                Console.WriteLine("Das , ist das Trennzeichen für die Nachkommastellen.");
-                Console.WriteLine("Alle drei Sonderzeichen sind optional!");
+                Console.WriteLine("Du musst eine gültige Gleitkommazahl eingeben!                                ");
+                Console.WriteLine("Neben den Ziffern 0-9 sind lediglich die folgenden Sonderzeichen erlaubt: ,.- ");
+                Console.WriteLine("Dabei muss das - als erstes Zeichen vor einer Ziffer gesetzt werden.          ");
+                Console.WriteLine("Der . fungiert als Trennzeichen an Tausenderstellen.                          ");
+                Console.WriteLine("Das , ist das Trennzeichen für die Nachkommastellen.                          ");
+                Console.WriteLine("Alle drei Sonderzeichen sind optional!                                        ");
+                Console.ResetColor();
                 Console.WriteLine();
-                Console.Write("Bitte gib erneut eine Zahl für die Berechnung ein: ");
+                Console.Write("Zahl.....: ");
                 eingabe = Console.ReadLine();
             }
             return zahl;
         }
 
-        private void PruefeAufGueltigenWertebereich()
+        private bool PruefeAufGueltigenWertebereich()
         {
             if (model.FalscheEingabe)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
+                Console.BackgroundColor = ConsoleColor.DarkRed;
                 Console.WriteLine("Die eingegebene Zahl muss zwischen -10,0 und 100,0 liegen!");
                 Console.ResetColor();
+                return true;
             }
+            else
+                return false;
         }
 
         public void HohleWeitereEingabenVomBenutzer()
         {
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            Console.WriteLine("Letztes Ergebnis = Erste Zahl!                 ");
+            Console.WriteLine("Es geht weiter, mit der Eingabe des Operators! ");
+            Console.ResetColor();
+
             model.ErsteZahl = model.Resultat;
             model.Operation = HohleOperatorVomBenutzer();
-            model.ZweiteZahl = HohleZahlVomBenutzer();
+
+            do
+            {
+                model.ZweiteZahl = HohleZahlVomBenutzer();
+            } while (PruefeAufGueltigenWertebereich());
         }
 
         public void HohleEingabeVomBenutzer()
         {
-            ZeigeMenu();
-            model.ErsteZahl = HohleZahlVomBenutzer();
-            PruefeAufGueltigenWertebereich();
-            model.Operation = HohleOperatorVomBenutzer();
-            model.ZweiteZahl = HohleZahlVomBenutzer();
+            do
+            {
+                model.ErsteZahl = HohleZahlVomBenutzer();
+            } while (PruefeAufGueltigenWertebereich());
 
+            model.Operation = HohleOperatorVomBenutzer();
+
+            do
+            {
+                model.ZweiteZahl = HohleZahlVomBenutzer();
+            } while (PruefeAufGueltigenWertebereich());
         }
 
         private string HohleOperatorVomBenutzer()
@@ -100,23 +119,29 @@ namespace Taschenrechner
             switch (model.Operation)
             {
                 case "+":
-                    Console.WriteLine("Ergebnis.: " + model.ErsteZahl + "+" + model.ZweiteZahl + " = " + model.Resultat);
+                    Console.WriteLine("Ergebnis.: " + model.Resultat + " = (" + model.ErsteZahl + ")+(" + model.ZweiteZahl + ")");
+                    Console.WriteLine("-------------------------------------------------");
                     break;
 
                 case "-":
-                    Console.WriteLine("Die Differenz ist: {0}", model.Resultat);
+                    Console.WriteLine("Ergebnis.: " + model.Resultat + " = (" + model.ErsteZahl + ")-(" + model.ZweiteZahl + ")");
+                    Console.WriteLine("-------------------------------------------------");
                     break;
 
                 case "/":
-                    Console.WriteLine("Der Quotient ist: {0}", model.Resultat);
+                    Console.WriteLine("Ergebnis.: " + model.Resultat + " = (" + model.ErsteZahl + ")/(" + model.ZweiteZahl + ")");
+                    Console.WriteLine("-------------------------------------------------");
                     break;
 
                 case "*":
-                    Console.WriteLine("Das Produkt ist: {0}", model.Resultat);
+                    Console.WriteLine("Ergebnis.: " + model.Resultat + " = (" + model.ErsteZahl + ")*(" + model.ZweiteZahl + ")");
+                    Console.WriteLine("-------------------------------------------------");
                     break;
 
                 default:
+                    Console.BackgroundColor = ConsoleColor.DarkRed;
                     Console.WriteLine("Du hast eine ungültige Auswahl der Operation getroffen!");
+                    Console.ResetColor();
                     break;
             }
         }

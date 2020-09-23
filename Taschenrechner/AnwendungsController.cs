@@ -21,6 +21,7 @@ namespace Taschenrechner
         {
             while (!view.BenutzerWillBeenden)
             {
+                view.ZeigeMenu();
                 view.HohleEingabeVomBenutzer();
                 model.Berechne();
                 view.GibResultatAus();
