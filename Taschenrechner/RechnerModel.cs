@@ -70,9 +70,6 @@ namespace Taschenrechner
                 case "*":
                     Resultat = Multipliziere(ErsteZahl, ZweiteZahl);
                     break;
-
-                default:
-                    break;
             }
         }
 

@@ -23,11 +23,24 @@ namespace Taschenrechner
             {
                 view.ZeigeMenu();
                 view.HohleEingabeVomBenutzer();
+                if (view.ConsoleZurücksetzen)
+                {
+                    view.ConsoleZurücksetzen = false;
+                    Console.Clear();
+                    continue;
+                }
+
                 model.Berechne();
                 view.GibResultatAus();
                 while (!view.BenutzerWillBeenden)
                 {
                     view.HohleWeitereEingabenVomBenutzer();
+                    if (view.ConsoleZurücksetzen)
+                    {
+                        view.ConsoleZurücksetzen = false;
+                        Console.Clear();
+                        break;
+                    }
                     model.Berechne();
                     view.GibResultatAus();
                 }

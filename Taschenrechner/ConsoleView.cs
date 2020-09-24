@@ -15,31 +15,135 @@ namespace Taschenrechner
         {
             this.model = model;
             BenutzerWillBeenden = false;
+            FalscheEingabeZahl = false;
+            FalscheEingabeOperator = false;
         }
 
         public bool BenutzerWillBeenden { get; private set; }
+        public bool FalscheEingabeZahl { get; private set; }
+        public bool FalscheEingabeOperator { get; private set; }
+        public bool ConsoleZurücksetzen { get; set; }
         
         public void ZeigeMenu()
         {
             Console.BackgroundColor = ConsoleColor.DarkGray;
             Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("Beenden = (ENDE) | Berechnung Löschen = (C) | Aktuelle Zahl löschen = (CE)");
-            Console.WriteLine("Operatoren = (+ | - | * | / )                                             ");
+            Console.WriteLine("Beenden = (ENDE) | Berechnung Löschen = (C)");
+            Console.WriteLine("Operatoren = (+ | - | * | / )              ");
             Console.ResetColor();
         }
-        public double HohleZahlVomBenutzer()
+
+        public void HohleEingabeVomBenutzer()
+        {
+            do
+            {
+                model.ErsteZahl = HohleZahlVomBenutzer();
+            } while (FalscheEingabeZahl);
+            if (ConsoleZurücksetzen)
+                return;
+
+            do
+            {
+                model.Operation = HohleOperatorVomBenutzer();
+            } while (FalscheEingabeOperator);
+            if (ConsoleZurücksetzen)
+                return;
+
+            do
+            {
+                model.ZweiteZahl = HohleZahlVomBenutzer();
+            } while (FalscheEingabeZahl);
+            if (ConsoleZurücksetzen)
+                return;
+        }
+
+        public void HohleWeitereEingabenVomBenutzer()
+        {
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            Console.WriteLine("Letztes Ergebnis = Erste Zahl!                 ");
+            Console.WriteLine("Es geht weiter, mit der Eingabe des Operators! ");
+            Console.ResetColor();
+            Console.Write("Zahl.....: " + model.Resultat);
+            Console.WriteLine();
+
+            model.ErsteZahl = model.Resultat;
+
+            do
+            {
+                model.Operation = HohleOperatorVomBenutzer();
+            } while (FalscheEingabeOperator);
+            if (ConsoleZurücksetzen)
+                return;
+
+            do
+            {
+                model.ZweiteZahl = HohleZahlVomBenutzer();
+            } while (FalscheEingabeZahl);
+            if (ConsoleZurücksetzen)
+                return;
+        }
+
+
+        private double HohleZahlVomBenutzer()
         {
             string eingabe;
-            double zahl;
             Console.Write("Zahl.....: ");
             eingabe = Console.ReadLine();
+
+            MenuAbfrage(eingabe);
+            if (ConsoleZurücksetzen)
+                return 0.0;
+            return PruenfeAufGueltigeEingabeZahl(eingabe);
+        }
+
+        private string HohleOperatorVomBenutzer()
+        {
+            string eingabe;
+            Console.Write("Operator.: ");
+            eingabe = Console.ReadLine();
+
+            MenuAbfrage(eingabe);
+            if (ConsoleZurücksetzen)
+                return "";
+            PruenfeAufGueltigeEingabeOperator(eingabe);
+
+            return eingabe;
+        }
+
+        private void MenuAbfrage(string eingabe)
+        {
+            eingabe = eingabe.ToUpper();
 
             if (eingabe == "ENDE")
             {
                 BenutzerWillBeenden = true;
                 eingabe = "0,0";
+            } 
+
+            if (eingabe == "C")
+            {
+                ConsoleZurücksetzen = true;
+                return;
             }
 
+            if (eingabe == "CE")
+            {
+                Console.WriteLine("Letzte eingabe wiederholen");
+            }
+        }
+   
+        private double PruenfeAufGueltigeEingabeZahl(string eingabe)
+        {
+            double zahl;
+
+            if (model.FalscheEingabe)
+            {
+                Console.BackgroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("Die eingegebene Zahl muss zwischen -10,0 und 100,0 liegen!");
+                Console.ResetColor();
+                FalscheEingabeZahl = true;
+            }
+            
             while (!double.TryParse(eingabe, out zahl))
             {
                 Console.BackgroundColor = ConsoleColor.DarkRed;
@@ -58,59 +162,24 @@ namespace Taschenrechner
             return zahl;
         }
 
-        private bool PruefeAufGueltigenWertebereich()
+        private void PruenfeAufGueltigeEingabeOperator(string eingabe)
         {
-            if (model.FalscheEingabe)
+            if (eingabe != "+" && eingabe != "-" && eingabe != "/" && eingabe != "*")
             {
                 Console.BackgroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine("Die eingegebene Zahl muss zwischen -10,0 und 100,0 liegen!");
+                Console.WriteLine("Gültige Operatoren sind (+ | - | * | / )");
                 Console.ResetColor();
-                return true;
+                FalscheEingabeOperator = true;
             }
             else
-                return false;
-        }
-
-        public void HohleWeitereEingabenVomBenutzer()
-        {
-            Console.BackgroundColor = ConsoleColor.DarkBlue;
-            Console.WriteLine("Letztes Ergebnis = Erste Zahl!                 ");
-            Console.WriteLine("Es geht weiter, mit der Eingabe des Operators! ");
-            Console.ResetColor();
-
-            model.ErsteZahl = model.Resultat;
-            model.Operation = HohleOperatorVomBenutzer();
-
-            do
-            {
-                model.ZweiteZahl = HohleZahlVomBenutzer();
-            } while (PruefeAufGueltigenWertebereich());
-        }
-
-        public void HohleEingabeVomBenutzer()
-        {
-            do
-            {
-                model.ErsteZahl = HohleZahlVomBenutzer();
-            } while (PruefeAufGueltigenWertebereich());
-
-            model.Operation = HohleOperatorVomBenutzer();
-
-            do
-            {
-                model.ZweiteZahl = HohleZahlVomBenutzer();
-            } while (PruefeAufGueltigenWertebereich());
-        }
-
-        private string HohleOperatorVomBenutzer()
-        {
-            Console.Write("Operator.: ");
-            return Console.ReadLine();
+                FalscheEingabeOperator = false;
         }
 
         public void WarteAufEndeDurchBenutzer()
         {
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.Write("Zum Beenden bitte Return drücken!");
+            Console.ResetColor();
             Console.ReadLine();
         }
 
@@ -136,12 +205,6 @@ namespace Taschenrechner
                 case "*":
                     Console.WriteLine("Ergebnis.: " + model.Resultat + " = (" + model.ErsteZahl + ")*(" + model.ZweiteZahl + ")");
                     Console.WriteLine("-------------------------------------------------");
-                    break;
-
-                default:
-                    Console.BackgroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine("Du hast eine ungültige Auswahl der Operation getroffen!");
-                    Console.ResetColor();
                     break;
             }
         }
