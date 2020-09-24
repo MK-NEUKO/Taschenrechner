@@ -29,7 +29,6 @@ namespace Taschenrechner
                     Console.Clear();
                     continue;
                 }
-
                 model.Berechne();
                 view.GibResultatAus();
                 while (!view.BenutzerWillBeenden)

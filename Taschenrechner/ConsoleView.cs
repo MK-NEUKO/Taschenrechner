@@ -41,6 +41,8 @@ namespace Taschenrechner
             } while (FalscheEingabeZahl);
             if (ConsoleZurücksetzen)
                 return;
+            if (BenutzerWillBeenden)
+                return;
 
             do
             {
@@ -48,12 +50,16 @@ namespace Taschenrechner
             } while (FalscheEingabeOperator);
             if (ConsoleZurücksetzen)
                 return;
+            if (BenutzerWillBeenden)
+                return;
 
             do
             {
                 model.ZweiteZahl = HohleZahlVomBenutzer();
             } while (FalscheEingabeZahl);
             if (ConsoleZurücksetzen)
+                return;
+            if (BenutzerWillBeenden)
                 return;
         }
 
@@ -74,12 +80,16 @@ namespace Taschenrechner
             } while (FalscheEingabeOperator);
             if (ConsoleZurücksetzen)
                 return;
+            if (BenutzerWillBeenden)
+                return;
 
             do
             {
                 model.ZweiteZahl = HohleZahlVomBenutzer();
             } while (FalscheEingabeZahl);
             if (ConsoleZurücksetzen)
+                return;
+            if (BenutzerWillBeenden)
                 return;
         }
 
@@ -93,6 +103,8 @@ namespace Taschenrechner
             MenuAbfrage(eingabe);
             if (ConsoleZurücksetzen)
                 return 0.0;
+            if (BenutzerWillBeenden)
+                return 0.0;
             return PruenfeAufGueltigeEingabeZahl(eingabe);
         }
 
@@ -104,6 +116,8 @@ namespace Taschenrechner
 
             MenuAbfrage(eingabe);
             if (ConsoleZurücksetzen)
+                return "";
+            if (BenutzerWillBeenden)
                 return "";
             PruenfeAufGueltigeEingabeOperator(eingabe);
 
@@ -117,18 +131,13 @@ namespace Taschenrechner
             if (eingabe == "ENDE")
             {
                 BenutzerWillBeenden = true;
-                eingabe = "0,0";
+                return;
             } 
 
             if (eingabe == "C")
             {
                 ConsoleZurücksetzen = true;
                 return;
-            }
-
-            if (eingabe == "CE")
-            {
-                Console.WriteLine("Letzte eingabe wiederholen");
             }
         }
    
