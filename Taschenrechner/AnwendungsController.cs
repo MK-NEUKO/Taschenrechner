@@ -23,9 +23,9 @@ namespace Taschenrechner
             {
                 view.ZeigeMenu();
                 view.HohleEingabeVomBenutzer();
-                if (view.ConsoleZurücksetzen)
+                if (view.KonsoleZurücksetzen)
                 {
-                    view.ConsoleZurücksetzen = false;
+                    view.KonsoleZurücksetzen = false;
                     Console.Clear();
                     continue;
                 }
@@ -34,9 +34,9 @@ namespace Taschenrechner
                 while (!view.BenutzerWillBeenden)
                 {
                     view.HohleWeitereEingabenVomBenutzer();
-                    if (view.ConsoleZurücksetzen)
+                    if (view.KonsoleZurücksetzen)
                     {
-                        view.ConsoleZurücksetzen = false;
+                        view.KonsoleZurücksetzen = false;
                         Console.Clear();
                         break;
                     }

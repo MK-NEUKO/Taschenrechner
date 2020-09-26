@@ -8,7 +8,7 @@ namespace Taschenrechner
 {
     class ConsoleView
     {
-        private RechnerModel model;
+        private readonly RechnerModel model;
 
 
         public ConsoleView(RechnerModel model)
@@ -17,12 +17,13 @@ namespace Taschenrechner
             BenutzerWillBeenden = false;
             FalscheEingabeZahl = false;
             FalscheEingabeOperator = false;
+            KonsoleZurücksetzen = false;
         }
 
         public bool BenutzerWillBeenden { get; private set; }
         public bool FalscheEingabeZahl { get; private set; }
         public bool FalscheEingabeOperator { get; private set; }
-        public bool ConsoleZurücksetzen { get; set; }
+        public bool KonsoleZurücksetzen { get; set; }
         
         public void ZeigeMenu()
         {
@@ -39,7 +40,7 @@ namespace Taschenrechner
             {
                 model.ErsteZahl = HohleZahlVomBenutzer();
             } while (FalscheEingabeZahl);
-            if (ConsoleZurücksetzen)
+            if (KonsoleZurücksetzen)
                 return;
             if (BenutzerWillBeenden)
                 return;
@@ -48,7 +49,7 @@ namespace Taschenrechner
             {
                 model.Operation = HohleOperatorVomBenutzer();
             } while (FalscheEingabeOperator);
-            if (ConsoleZurücksetzen)
+            if (KonsoleZurücksetzen)
                 return;
             if (BenutzerWillBeenden)
                 return;
@@ -57,7 +58,7 @@ namespace Taschenrechner
             {
                 model.ZweiteZahl = HohleZahlVomBenutzer();
             } while (FalscheEingabeZahl);
-            if (ConsoleZurücksetzen)
+            if (KonsoleZurücksetzen)
                 return;
             if (BenutzerWillBeenden)
                 return;
@@ -69,16 +70,14 @@ namespace Taschenrechner
             Console.WriteLine("Letztes Ergebnis = Erste Zahl!                 ");
             Console.WriteLine("Es geht weiter, mit der Eingabe des Operators! ");
             Console.ResetColor();
-            Console.Write("Zahl.....: " + model.Resultat);
-            Console.WriteLine();
-
+            Console.WriteLine("Zahl.....: " + model.Resultat);
             model.ErsteZahl = model.Resultat;
 
             do
             {
                 model.Operation = HohleOperatorVomBenutzer();
             } while (FalscheEingabeOperator);
-            if (ConsoleZurücksetzen)
+            if (KonsoleZurücksetzen)
                 return;
             if (BenutzerWillBeenden)
                 return;
@@ -87,7 +86,7 @@ namespace Taschenrechner
             {
                 model.ZweiteZahl = HohleZahlVomBenutzer();
             } while (FalscheEingabeZahl);
-            if (ConsoleZurücksetzen)
+            if (KonsoleZurücksetzen)
                 return;
             if (BenutzerWillBeenden)
                 return;
@@ -101,7 +100,7 @@ namespace Taschenrechner
             eingabe = Console.ReadLine();
 
             MenuAbfrage(eingabe);
-            if (ConsoleZurücksetzen)
+            if (KonsoleZurücksetzen)
                 return 0.0;
             if (BenutzerWillBeenden)
                 return 0.0;
@@ -115,7 +114,7 @@ namespace Taschenrechner
             eingabe = Console.ReadLine();
 
             MenuAbfrage(eingabe);
-            if (ConsoleZurücksetzen)
+            if (KonsoleZurücksetzen)
                 return "";
             if (BenutzerWillBeenden)
                 return "";
@@ -136,7 +135,7 @@ namespace Taschenrechner
 
             if (eingabe == "C")
             {
-                ConsoleZurücksetzen = true;
+                KonsoleZurücksetzen = true;
                 return;
             }
         }
