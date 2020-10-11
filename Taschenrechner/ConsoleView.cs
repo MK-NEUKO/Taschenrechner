@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -32,6 +33,14 @@ namespace Taschenrechner
             Console.WriteLine("Beenden = (ENDE) | Berechnung Löschen = (C)");
             Console.WriteLine("Operatoren = (+ | - | * | / )              ");
             Console.ResetColor();
+        }
+
+        public void HinweisDivideByZeroException()
+        {
+            Console.BackgroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("Das Ergebnis ist Unendlich!");
+            Console.ResetColor();
+            Console.WriteLine();
         }
 
         public void HohleEingabeVomBenutzer()
@@ -85,53 +94,53 @@ namespace Taschenrechner
                 return;
         }
 
-        public void HohleWeitereEingabenVomBenutzer()
-        {
-            Console.BackgroundColor = ConsoleColor.DarkBlue;
-            Console.WriteLine("Letztes Ergebnis = Erste Zahl!                 ");
-            Console.WriteLine("Es geht weiter, mit der Eingabe des Operators! ");
-            Console.ResetColor();
-            Console.WriteLine("Zahl.....: " + model.Resultat);
-            try
-            {
-                model.ErsteZahl = model.Resultat;
-            }
-            catch (ArgumentOutOfRangeException)
-            {
-                Console.BackgroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine("Die eingegebene Zahl muss zwischen -10,0 und 100,0 liegen!");
-                Console.ResetColor();
-                FalscheEingabeZahl = true;
-            }
+        //public void HohleWeitereEingabenVomBenutzer()
+        //{
+        //    Console.BackgroundColor = ConsoleColor.DarkBlue;
+        //    Console.WriteLine("Letztes Ergebnis = Erste Zahl!                 ");
+        //    Console.WriteLine("Es geht weiter, mit der Eingabe des Operators! ");
+        //    Console.ResetColor();
+        //    Console.WriteLine("Zahl.....: " + model.Resultat);
+        //    try
+        //    {
+        //        model.ErsteZahl = model.Resultat;
+        //    }
+        //    catch (ArgumentOutOfRangeException)
+        //    {
+        //        Console.BackgroundColor = ConsoleColor.DarkRed;
+        //        Console.WriteLine("Die eingegebene Zahl muss zwischen -10,0 und 100,0 liegen!");
+        //        Console.ResetColor();
+        //        FalscheEingabeZahl = true;
+        //    }
 
-            do
-            {
-                model.Operation = HohleOperatorVomBenutzer();
-            } while (FalscheEingabeOperator);
-            if (KonsoleZurücksetzen)
-                return;
-            if (BenutzerWillBeenden)
-                return;
+        //    do
+        //    {
+        //        model.Operation = HohleOperatorVomBenutzer();
+        //    } while (FalscheEingabeOperator);
+        //    if (KonsoleZurücksetzen)
+        //        return;
+        //    if (BenutzerWillBeenden)
+        //        return;
 
-            do
-            {
-                try
-                {
-                    model.ZweiteZahl = HohleZahlVomBenutzer();
-                }
-                catch (ArgumentOutOfRangeException)
-                {
-                    Console.BackgroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine("Die eingegebene Zahl muss zwischen -10,0 und 100,0 liegen!");
-                    Console.ResetColor();
-                    FalscheEingabeZahl = true;
-                }
-            } while (FalscheEingabeZahl);
-            if (KonsoleZurücksetzen)
-                return;
-            if (BenutzerWillBeenden)
-                return;
-        }
+        //    do
+        //    {
+        //        try
+        //        {
+        //            model.ZweiteZahl = HohleZahlVomBenutzer();
+        //        }
+        //        catch (ArgumentOutOfRangeException)
+        //        {
+        //            Console.BackgroundColor = ConsoleColor.DarkRed;
+        //            Console.WriteLine("Die eingegebene Zahl muss zwischen -10,0 und 100,0 liegen!");
+        //            Console.ResetColor();
+        //            FalscheEingabeZahl = true;
+        //        }
+        //    } while (FalscheEingabeZahl);
+        //    if (KonsoleZurücksetzen)
+        //        return;
+        //    if (BenutzerWillBeenden)
+        //        return;
+        //}
 
 
         private double HohleZahlVomBenutzer()

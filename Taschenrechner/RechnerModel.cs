@@ -90,6 +90,8 @@ namespace Taschenrechner
 
         private double Dividiere(double divident, double divisor)
         {
+            if (divisor == 0) throw new DivideByZeroException();
+
             double quotient = divident / divisor;
             return quotient;
         }

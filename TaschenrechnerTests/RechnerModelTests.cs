@@ -60,17 +60,5 @@ namespace Taschenrechner.Tests
 
             Assert.AreEqual(20.4, model.Resultat);
         }
-
-        [TestMethod]
-        public void PruefeUntereGrenzeDesWertebereiches()
-        {
-            model.ErsteZahl = -11;
-            model.ZweiteZahl = 10;
-            model.Operation = "*";
-
-            model.Berechne();
-
-            Assert.AreEqual(ArgumentOutOfRangeException, model.ErsteZahl);
-        }
     }
 }

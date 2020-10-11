@@ -29,22 +29,30 @@ namespace Taschenrechner
                     Console.Clear();
                     continue;
                 }
-                model.Berechne();
-                view.GibResultatAus();
-                while (!view.BenutzerWillBeenden)
+                try
                 {
-                    view.HohleWeitereEingabenVomBenutzer();
-                    if (view.KonsoleZurücksetzen)
-                    {
-                        view.KonsoleZurücksetzen = false;
-                        Console.Clear();
-                        break;
-                    }
                     model.Berechne();
-                    view.GibResultatAus();
                 }
+                catch (DivideByZeroException)
+                {
+                    view.HinweisDivideByZeroException();
+                    continue;
+                }               
+                view.GibResultatAus();
+                //while (!view.BenutzerWillBeenden)
+                //{
+                //    view.HohleWeitereEingabenVomBenutzer();
+                //    if (view.KonsoleZurücksetzen)
+                //    {
+                //        view.KonsoleZurücksetzen = false;
+                //        Console.Clear();
+                //        break;
+                //    }
+                //    model.Berechne();
+                //    view.GibResultatAus();
+                //}
             }
-           
+
             view.WarteAufEndeDurchBenutzer();
         }
     }
