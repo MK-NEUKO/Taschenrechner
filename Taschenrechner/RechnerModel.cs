@@ -15,10 +15,9 @@ namespace Taschenrechner
         {
             Resultat = 0;
             Operation = "unbekannt";
-            FalscheEingabe = false;
+            //FalscheEingabe = false;
         }
-
-        public bool FalscheEingabe { get; private set; }
+       
         public double Resultat { get; private set; }
         public string Operation { get; set; }
         public double ErsteZahl
@@ -29,10 +28,9 @@ namespace Taschenrechner
                 if (value >= -10.0 && value <= 100.0)
                 {
                     _ersteZahl = value;
-                    FalscheEingabe = false;
                 }
                 else
-                    FalscheEingabe = true;
+                    throw new ArgumentOutOfRangeException();
             }
         }
 
@@ -44,10 +42,9 @@ namespace Taschenrechner
                 if (value >= -10.0 && value <= 100.0)
                 {
                     _zweiteZahl = value;
-                    FalscheEingabe = false;
                 }
                 else
-                    FalscheEingabe = true;            
+                    throw new ArgumentOutOfRangeException();           
             }
         }
 

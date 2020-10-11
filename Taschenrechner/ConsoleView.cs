@@ -38,7 +38,18 @@ namespace Taschenrechner
         {
             do
             {
-                model.ErsteZahl = HohleZahlVomBenutzer();
+                try
+                {
+                    model.ErsteZahl = HohleZahlVomBenutzer();
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    Console.BackgroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("Die eingegebene Zahl muss zwischen -10,0 und 100,0 liegen!");
+                    Console.ResetColor();
+                    FalscheEingabeZahl = true;
+                }
+                
             } while (FalscheEingabeZahl);
             if (KonsoleZurücksetzen)
                 return;
@@ -56,7 +67,17 @@ namespace Taschenrechner
 
             do
             {
-                model.ZweiteZahl = HohleZahlVomBenutzer();
+                try
+                {
+                    model.ZweiteZahl = HohleZahlVomBenutzer();
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    Console.BackgroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("Die eingegebene Zahl muss zwischen -10,0 und 100,0 liegen!");
+                    Console.ResetColor();
+                    FalscheEingabeZahl = true;
+                }
             } while (FalscheEingabeZahl);
             if (KonsoleZurücksetzen)
                 return;
@@ -71,7 +92,17 @@ namespace Taschenrechner
             Console.WriteLine("Es geht weiter, mit der Eingabe des Operators! ");
             Console.ResetColor();
             Console.WriteLine("Zahl.....: " + model.Resultat);
-            model.ErsteZahl = model.Resultat;
+            try
+            {
+                model.ErsteZahl = model.Resultat;
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                Console.BackgroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("Die eingegebene Zahl muss zwischen -10,0 und 100,0 liegen!");
+                Console.ResetColor();
+                FalscheEingabeZahl = true;
+            }
 
             do
             {
@@ -84,7 +115,17 @@ namespace Taschenrechner
 
             do
             {
-                model.ZweiteZahl = HohleZahlVomBenutzer();
+                try
+                {
+                    model.ZweiteZahl = HohleZahlVomBenutzer();
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    Console.BackgroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("Die eingegebene Zahl muss zwischen -10,0 und 100,0 liegen!");
+                    Console.ResetColor();
+                    FalscheEingabeZahl = true;
+                }
             } while (FalscheEingabeZahl);
             if (KonsoleZurücksetzen)
                 return;
@@ -143,15 +184,8 @@ namespace Taschenrechner
         private double PruenfeAufGueltigeEingabeZahl(string eingabe)
         {
             double zahl;
+            FalscheEingabeZahl = false;
 
-            if (model.FalscheEingabe)
-            {
-                Console.BackgroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine("Die eingegebene Zahl muss zwischen -10,0 und 100,0 liegen!");
-                Console.ResetColor();
-                FalscheEingabeZahl = true;
-            }
-            
             while (!double.TryParse(eingabe, out zahl))
             {
                 Console.BackgroundColor = ConsoleColor.DarkRed;

@@ -24,16 +24,53 @@ namespace Taschenrechner.Tests
 
             Assert.AreEqual(double.PositiveInfinity, model.Resultat);
         }
+
         [TestMethod]
-        public void Pruefe_AdditionAufGrenzwerte()
+        public void PruefeAddition()
         {
+            model.ErsteZahl = 10.3;
+            model.ZweiteZahl = 9.3;
             model.Operation = "+";
-            model.ErsteZahl = -10.0;
-            model.ZweiteZahl = 100.0;
 
             model.Berechne();
 
-            Assert.AreEqual(90, model.Resultat);
+            Assert.AreEqual(19.6, model.Resultat);
+        }
+
+        [TestMethod]
+        public void PruefeSubtraktion()
+        {
+            model.ErsteZahl = 10.0;
+            model.ZweiteZahl = 5.0;
+            model.Operation = "-";
+
+            model.Berechne();
+
+            Assert.AreEqual(5.0, model.Resultat);
+        }
+
+        [TestMethod]
+        public void PruefeMultiplikation()
+        {
+            model.ErsteZahl = 10.2;
+            model.ZweiteZahl = 2.0;
+            model.Operation = "*";
+
+            model.Berechne();
+
+            Assert.AreEqual(20.4, model.Resultat);
+        }
+
+        [TestMethod]
+        public void PruefeUntereGrenzeDesWertebereiches()
+        {
+            model.ErsteZahl = -11;
+            model.ZweiteZahl = 10;
+            model.Operation = "*";
+
+            model.Berechne();
+
+            Assert.AreEqual(ArgumentOutOfRangeException, model.ErsteZahl);
         }
     }
 }
