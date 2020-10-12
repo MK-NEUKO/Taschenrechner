@@ -37,7 +37,8 @@ namespace Taschenrechner
                 {
                     view.HinweisDivideByZeroException();
                     continue;
-                }                              
+                }
+                view.GibResultatAus();
             }
 
             view.WarteAufEndeDurchBenutzer();
