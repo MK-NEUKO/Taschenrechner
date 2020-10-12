@@ -37,20 +37,7 @@ namespace Taschenrechner
                 {
                     view.HinweisDivideByZeroException();
                     continue;
-                }               
-                view.GibResultatAus();
-                //while (!view.BenutzerWillBeenden)
-                //{
-                //    view.HohleWeitereEingabenVomBenutzer();
-                //    if (view.KonsoleZurücksetzen)
-                //    {
-                //        view.KonsoleZurücksetzen = false;
-                //        Console.Clear();
-                //        break;
-                //    }
-                //    model.Berechne();
-                //    view.GibResultatAus();
-                //}
+                }                              
             }
 
             view.WarteAufEndeDurchBenutzer();
