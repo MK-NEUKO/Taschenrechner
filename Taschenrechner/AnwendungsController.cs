@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,6 +12,9 @@ namespace Taschenrechner
         private RechnerModel model;
         private ConsoleView view;
 
+        private bool benutzerWillBeenden;
+        private bool benutzerWillZuruecksetzen;
+
         public AnwendungsController(RechnerModel model, ConsoleView view)
         {
             this.model = model;
@@ -19,16 +23,38 @@ namespace Taschenrechner
 
         public void Ausfuehren()
         {
-            while (!view.BenutzerWillBeenden)
+            while (!benutzerWillBeenden)
             {
                 view.ZeigeMenu();
-                view.HohleEingabeVomBenutzer();
-                if (view.KonsoleZurücksetzen)
+
+                try
                 {
-                    view.KonsoleZurücksetzen = false;
-                    Console.Clear();
+                    model.ErsteZahl = view.HohleZahlVomBenutzer();
+                    if (benutzerWillBeenden)
+                        break;
+                    if (benutzerWillZuruecksetzen)
+                        continue;
+                    model.Operation = view.HohleOperatorVomBenutzer();
+                    if (benutzerWillBeenden)
+                        break;
+                    if (benutzerWillZuruecksetzen)
+                        continue;
+                    model.ZweiteZahl = view.HohleZahlVomBenutzer();
+                    if (benutzerWillBeenden)
+                        break;
+                    if (benutzerWillZuruecksetzen)
+                        continue;
+                }
+                catch (ArgumentOutOfRangeException)
+                {
+                    view.HinweisArgumentOutOfRangeException();
                     continue;
                 }
+                catch (ArgumentException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
                 try
                 {
                     model.Berechne();
@@ -38,10 +64,24 @@ namespace Taschenrechner
                     view.HinweisDivideByZeroException();
                     continue;
                 }
+                
                 view.GibResultatAus();
             }
 
+            
+
             view.WarteAufEndeDurchBenutzer();
+        }
+
+        public void View_Beenden()
+        {          
+            benutzerWillBeenden = true;
+        }
+
+        public void View_Zuruecksetzen()
+        {
+            Console.Clear();
+            benutzerWillZuruecksetzen = true;
         }
     }
 }

@@ -10,16 +10,29 @@ namespace Taschenrechner
     {
         private double _ersteZahl;
         private double _zweiteZahl;
+        private string _operation;
 
         public RechnerModel()
         {
             Resultat = 0;
-            Operation = "unbekannt";
-            //FalscheEingabe = false;
+            //Operation = "";
         }
        
         public double Resultat { get; private set; }
-        public string Operation { get; set; }
+        public string Operation
+        {
+            get { return _operation; }
+            set
+            {
+                if (value == "+" || value == "-" || value == "/" || value == "*")
+                {
+                    _operation = value;
+                }
+                else
+                    throw new ArgumentException("Gültige Operatoren sind (+ | - | * | / )");
+            }
+        }
+           
         public double ErsteZahl
         {
             get { return _ersteZahl; }

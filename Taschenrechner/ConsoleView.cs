@@ -11,21 +11,14 @@ namespace Taschenrechner
     {
         private readonly RechnerModel model;
 
+        public event BeendenEventHandler Beenden;
+        public event ZuruecksetzenEventHandler Zuruecksetzen;
 
         public ConsoleView(RechnerModel model)
         {
             this.model = model;
-            BenutzerWillBeenden = false;
-            FalscheEingabeZahl = false;
-            FalscheEingabeOperator = false;
-            KonsoleZurücksetzen = false;
         }
 
-        public bool BenutzerWillBeenden { get; private set; }
-        public bool FalscheEingabeZahl { get; private set; }
-        public bool FalscheEingabeOperator { get; private set; }
-        public bool KonsoleZurücksetzen { get; set; }
-        
         public void ZeigeMenu()
         {
             Console.BackgroundColor = ConsoleColor.DarkGray;
@@ -38,149 +31,104 @@ namespace Taschenrechner
         public void HinweisDivideByZeroException()
         {
             Console.BackgroundColor = ConsoleColor.DarkRed;
-            Console.WriteLine("Das Ergebnis ist Unendlich!");
+            Console.WriteLine("Das Teilen durch '0' ist nicht definiert!");
             Console.ResetColor();
             Console.WriteLine();
         }
 
-        public void HohleEingabeVomBenutzer()
+        public void HinweisArgumentOutOfRangeException()
         {
-            do
-            {
-                try
-                {
-                    model.ErsteZahl = HohleZahlVomBenutzer();
-                }
-                catch (ArgumentOutOfRangeException)
-                {
-                    Console.BackgroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine("Die eingegebene Zahl muss zwischen -10,0 und 100,0 liegen!");
-                    Console.ResetColor();
-                    FalscheEingabeZahl = true;
-                }
-                
-            } while (FalscheEingabeZahl);
-            if (KonsoleZurücksetzen)
-                return;
-            if (BenutzerWillBeenden)
-                return;
-
-            do
-            {
-                model.Operation = HohleOperatorVomBenutzer();
-            } while (FalscheEingabeOperator);
-            if (KonsoleZurücksetzen)
-                return;
-            if (BenutzerWillBeenden)
-                return;
-
-            do
-            {
-                try
-                {
-                    model.ZweiteZahl = HohleZahlVomBenutzer();
-                }
-                catch (ArgumentOutOfRangeException)
-                {
-                    Console.BackgroundColor = ConsoleColor.DarkRed;
-                    Console.WriteLine("Die eingegebene Zahl muss zwischen -10,0 und 100,0 liegen!");
-                    Console.ResetColor();
-                    FalscheEingabeZahl = true;
-                }
-            } while (FalscheEingabeZahl);
-            if (KonsoleZurücksetzen)
-                return;
-            if (BenutzerWillBeenden)
-                return;
+            Console.WriteLine();
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            Console.WriteLine("Ungültiger Wertebereich, dieser ist von -10 bis 100!");
+            Console.WriteLine("Die Berechnung wird zurückgesetzt.                  ");
+            Console.WriteLine("Bitte beginnen Sie von vorn.                         ");
+            Console.ResetColor();
+            Console.WriteLine();
         }
 
-
-        private double HohleZahlVomBenutzer()
+        public double HohleZahlVomBenutzer()
         {
             string eingabe;
-            Console.Write("Zahl.....: ");
-            eingabe = Console.ReadLine();
+            double zahl = 0;
+            bool wiederholen;
 
-            MenuAbfrage(eingabe);
-            if (KonsoleZurücksetzen)
-                return 0.0;
-            if (BenutzerWillBeenden)
-                return 0.0;
-            return PruenfeAufGueltigeEingabeZahl(eingabe);
-        }
-
-        private string HohleOperatorVomBenutzer()
-        {
-            string eingabe;
-            Console.Write("Operator.: ");
-            eingabe = Console.ReadLine();
-
-            MenuAbfrage(eingabe);
-            if (KonsoleZurücksetzen)
-                return "";
-            if (BenutzerWillBeenden)
-                return "";
-            PruenfeAufGueltigeEingabeOperator(eingabe);
-
-            return eingabe;
-        }
-
-        private void MenuAbfrage(string eingabe)
-        {
-            eingabe = eingabe.ToUpper();
-
-            if (eingabe == "ENDE")
+            do
             {
-                BenutzerWillBeenden = true;
-                return;
-            } 
+                wiederholen = false;
 
-            if (eingabe == "C")
-            {
-                KonsoleZurücksetzen = true;
-                return;
-            }
-        }
-   
-        private double PruenfeAufGueltigeEingabeZahl(string eingabe)
-        {
-            double zahl;
-            FalscheEingabeZahl = false;
-
-            while (!double.TryParse(eingabe, out zahl))
-            {
-                Console.BackgroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine();
-                Console.WriteLine("Du musst eine gültige Gleitkommazahl eingeben!                                ");
-                Console.WriteLine("Neben den Ziffern 0-9 sind lediglich die folgenden Sonderzeichen erlaubt: ,.- ");
-                Console.WriteLine("Dabei muss das - als erstes Zeichen vor einer Ziffer gesetzt werden.          ");
-                Console.WriteLine("Der . fungiert als Trennzeichen an Tausenderstellen.                          ");
-                Console.WriteLine("Das , ist das Trennzeichen für die Nachkommastellen.                          ");
-                Console.WriteLine("Alle drei Sonderzeichen sind optional!                                        ");
-                Console.ResetColor();
-                Console.WriteLine();
                 Console.Write("Zahl.....: ");
                 eingabe = Console.ReadLine();
-            }
+
+                eingabe = eingabe.ToUpper();
+                if (eingabe == "ENDE")
+                {
+                    Beenden();
+                    return 0;
+                }
+                else if (eingabe == "C")
+                {
+                    Zuruecksetzen();
+                    return 0;
+                }
+                else if (!double.TryParse(eingabe, out zahl))
+                {
+                    wiederholen = true;
+                    HinweisTryParseFehlgeschlagen();
+                }
+            } while (wiederholen);
+
             return zahl;
         }
 
-        private void PruenfeAufGueltigeEingabeOperator(string eingabe)
+        public string HohleOperatorVomBenutzer()
         {
-            if (eingabe != "+" && eingabe != "-" && eingabe != "/" && eingabe != "*")
+            string eingabe;
+            bool wiederholen = true;
+
+            do
             {
-                Console.BackgroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine("Gültige Operatoren sind (+ | - | * | / )");
-                Console.ResetColor();
-                FalscheEingabeOperator = true;
-            }
-            else
-                FalscheEingabeOperator = false;
+                Console.Write("Operator.: ");
+                eingabe = Console.ReadLine();
+
+                eingabe = eingabe.ToUpper();
+                if (eingabe == "ENDE")
+                {
+                    Beenden();
+                    return "";
+                }
+                else if (eingabe == "C")
+                {
+                    Zuruecksetzen();
+                    return "";
+                }
+                else if (eingabe == "+" || eingabe == "-" || eingabe == "/" || eingabe == "*")
+                {
+                    wiederholen = false;               
+                }                 
+            } while (wiederholen);
+
+            return eingabe;
+        }
+       
+        private void HinweisTryParseFehlgeschlagen()
+        {
+            Console.BackgroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine();
+            Console.WriteLine("Du musst eine gültige Gleitkommazahl eingeben!                                ");
+            Console.WriteLine("Neben den Ziffern 0-9 sind lediglich die folgenden Sonderzeichen erlaubt: ,.- ");
+            Console.WriteLine("Dabei muss das - als erstes Zeichen vor einer Ziffer gesetzt werden.          ");
+            Console.WriteLine("Der . fungiert als Trennzeichen an Tausenderstellen.                          ");
+            Console.WriteLine("Das , ist das Trennzeichen für die Nachkommastellen.                          ");
+            Console.WriteLine("Alle drei Sonderzeichen sind optional!                                        ");
+            Console.ResetColor();
+            Console.WriteLine();
         }
 
         public void WarteAufEndeDurchBenutzer()
         {
             Console.BackgroundColor = ConsoleColor.DarkBlue;
+            Console.WriteLine();
             Console.Write("Zum Beenden bitte Return drücken!");
             Console.ResetColor();
             Console.ReadLine();
