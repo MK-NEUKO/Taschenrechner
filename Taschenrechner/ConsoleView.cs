@@ -30,8 +30,11 @@ namespace Taschenrechner
 
         public void HinweisDivideByZeroException()
         {
+            Console.WriteLine();
             Console.BackgroundColor = ConsoleColor.DarkRed;
             Console.WriteLine("Das Teilen durch '0' ist nicht definiert!");
+            Console.WriteLine("Die Berechnung wird zurückgesetzt.       ");
+            Console.WriteLine("Bitte beginnen Sie von vorn.             ");
             Console.ResetColor();
             Console.WriteLine();
         }
@@ -39,10 +42,10 @@ namespace Taschenrechner
         public void HinweisArgumentOutOfRangeException()
         {
             Console.WriteLine();
-            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            Console.BackgroundColor = ConsoleColor.DarkRed;
             Console.WriteLine("Ungültiger Wertebereich, dieser ist von -10 bis 100!");
             Console.WriteLine("Die Berechnung wird zurückgesetzt.                  ");
-            Console.WriteLine("Bitte beginnen Sie von vorn.                         ");
+            Console.WriteLine("Bitte beginnen Sie von vorn.                        ");
             Console.ResetColor();
             Console.WriteLine();
         }
