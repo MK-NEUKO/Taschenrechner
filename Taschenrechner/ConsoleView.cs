@@ -28,6 +28,16 @@ namespace Taschenrechner
             Console.ResetColor();
         }
 
+        public void HinweisArgumentException()
+        {
+            Console.WriteLine();
+            Console.BackgroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("Gültige Operatoren sind: (+ | - | * | / )");
+            Console.WriteLine("Bitte versuchen Sie es erneut.           ");
+            Console.ResetColor();
+            Console.WriteLine();
+        }
+
         public void HinweisDivideByZeroException()
         {
             Console.WriteLine();
@@ -87,10 +97,12 @@ namespace Taschenrechner
         public string HohleOperatorVomBenutzer()
         {
             string eingabe;
-            bool wiederholen = true;
+            bool wiederholen;
 
             do
             {
+                wiederholen = true;
+
                 Console.Write("Operator.: ");
                 eingabe = Console.ReadLine();
 
@@ -106,9 +118,12 @@ namespace Taschenrechner
                     return "";
                 }
                 else if (eingabe == "+" || eingabe == "-" || eingabe == "/" || eingabe == "*")
-                {
-                    wiederholen = false;               
-                }                 
+                {                   
+                    wiederholen = false;
+                } 
+                else
+                    HinweisArgumentException();
+
             } while (wiederholen);
 
             return eingabe;

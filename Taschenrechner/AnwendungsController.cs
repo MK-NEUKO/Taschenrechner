@@ -33,17 +33,28 @@ namespace Taschenrechner
                     if (benutzerWillBeenden)
                         break;
                     if (benutzerWillZuruecksetzen)
+                    {
+                        benutzerWillZuruecksetzen = false;
                         continue;
+                    }
+ 
                     model.Operation = view.HohleOperatorVomBenutzer();
                     if (benutzerWillBeenden)
                         break;
                     if (benutzerWillZuruecksetzen)
+                    {
+                        benutzerWillZuruecksetzen = false;
                         continue;
+                    }
+
                     model.ZweiteZahl = view.HohleZahlVomBenutzer();
                     if (benutzerWillBeenden)
                         break;
                     if (benutzerWillZuruecksetzen)
+                    {
+                        benutzerWillZuruecksetzen = false;
                         continue;
+                    }
                 }
                 catch (ArgumentOutOfRangeException)
                 {
