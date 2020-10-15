@@ -1,13 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Taschenrechner;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Taschenrechner.Tests
 {
+    // TODT Tests vervollständigen, Exeptions prüfen, Überlauf...
+
     [TestClass()]
     public class RechnerModelTests
     {
