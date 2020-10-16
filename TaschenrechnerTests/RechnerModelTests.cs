@@ -1,8 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 
 namespace Taschenrechner.Tests
 {
-    // TODT Tests vervollständigen, Exeptions prüfen, Überlauf...
+    // TODO Tests vervollständigen, Exeptions prüfen, Überlauf...
 
     [TestClass()]
     public class RechnerModelTests
@@ -10,19 +11,133 @@ namespace Taschenrechner.Tests
         RechnerModel model = new RechnerModel();
 
         [TestMethod()]
-        public void Berechne_DivisionDurchNull_ErgibtUnendlich()
+        [ExpectedException(typeof(ArgumentException))]
+        public void Test_Berechne_FalscherOperator()
         {
+            // Arrange
+            model.Operation = "x";
+            model.ErsteZahl = 8;
+            model.ZweiteZahl = 4;
+            // Act
+            try
+            {
+                model.Berechne();
+            }
+            catch (ArgumentException ex)
+            {
+                //Assert
+                Assert.AreEqual("Gültige Operatoren sind (+ | - | * | / )", ex.Message);
+                throw;
+            }
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Test_Berechne_WertebereichErsteZahlObergrenze()
+        {
+            // Arrange
+            model.Operation = "/";
+            model.ErsteZahl = 101;
+            model.ZweiteZahl = 8;
+            // Act
+            try
+            {
+                model.Berechne();
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                //Assert
+                Assert.AreEqual("Wertebereich = -10 bis 100", ex.Message);
+                throw;
+            }
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Test_Berechne_WertebereichZweiteZahlObergrenze()
+        {
+            // Arrange
+            model.Operation = "/";
+            model.ErsteZahl = 8;
+            model.ZweiteZahl = 101;
+            // Act
+            try
+            {
+                model.Berechne();
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                //Assert
+                Assert.AreEqual("Wertebereich = -10 bis 100", ex.Message);
+                throw;
+            }
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Test_Berechne_WertebereichZweiteZahlUntergrenze()
+        {
+            // Arrange
+            model.Operation = "/";
+            model.ErsteZahl = 8;
+            model.ZweiteZahl = -11;
+            // Act
+            try
+            {
+                model.Berechne();
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                //Assert
+                Assert.AreEqual("Wertebereich = -10 bis 100", ex.Message);
+                throw;
+            }
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void Test_Berechne_WertebereichErsteZahlUntergrenze()
+        {
+            // Arrange
+            model.Operation = "/";
+            model.ErsteZahl = -11;
+            model.ZweiteZahl = 5;
+            // Act
+            try
+            {
+                model.Berechne();
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                //Assert
+                Assert.AreEqual("Wertebereich = -10 bis 100", ex.Message);
+                throw;
+            }
+        }
+
+        [TestMethod()]
+        [ExpectedException(typeof(DivideByZeroException))]
+        public void Test_Division_DivisionDurchNull()
+        {
+            // Arrange
             model.Operation = "/";
             model.ErsteZahl = 10;
             model.ZweiteZahl = 0;
-
-            model.Berechne();
-
-            Assert.AreEqual(double.PositiveInfinity, model.Resultat);
+            // Act
+            try
+            {
+                model.Berechne();
+            }
+            catch (DivideByZeroException ex)
+            {
+                //Assert
+                Assert.AreEqual("Unzulässige Division durch '0'.", ex.Message);
+                throw;
+            }                    
         }
 
         [TestMethod]
-        public void PruefeAddition()
+        public void Test_Addition()
         {
             model.ErsteZahl = 10.3;
             model.ZweiteZahl = 9.3;
@@ -34,7 +149,7 @@ namespace Taschenrechner.Tests
         }
 
         [TestMethod]
-        public void PruefeSubtraktion()
+        public void Test_Subtraktion()
         {
             model.ErsteZahl = 10.0;
             model.ZweiteZahl = 5.0;
@@ -46,7 +161,7 @@ namespace Taschenrechner.Tests
         }
 
         [TestMethod]
-        public void PruefeMultiplikation()
+        public void Test_Multiplikation()
         {
             model.ErsteZahl = 10.2;
             model.ZweiteZahl = 2.0;

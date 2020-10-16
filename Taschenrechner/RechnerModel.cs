@@ -11,7 +11,6 @@ namespace Taschenrechner
         public RechnerModel()
         {
             Resultat = 0;
-            //Operation = "";
         }
        
         public double Resultat { get; private set; }
@@ -39,7 +38,7 @@ namespace Taschenrechner
                     _ersteZahl = value;
                 }
                 else
-                    throw new ArgumentOutOfRangeException();
+                    throw new ArgumentOutOfRangeException("Wertebereich = -10 bis 100");
             }
         }
 
@@ -53,7 +52,7 @@ namespace Taschenrechner
                     _zweiteZahl = value;
                 }
                 else
-                    throw new ArgumentOutOfRangeException();           
+                    throw new ArgumentOutOfRangeException("Wertebereich = -10 bis 100");           
             }
         }
 
@@ -99,7 +98,7 @@ namespace Taschenrechner
 
         private double Dividiere(double divident, double divisor)
         {
-            if (divisor == 0) throw new DivideByZeroException();
+            if (divisor == 0) throw new DivideByZeroException("Unzulässige Division durch '0'.");
 
             double quotient = divident / divisor;
             return quotient;
