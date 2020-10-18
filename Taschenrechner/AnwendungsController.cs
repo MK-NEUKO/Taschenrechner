@@ -14,6 +14,8 @@ namespace Taschenrechner
         {
             this.model = model;
             this.view = view;
+            benutzerWillBeenden = false;
+            benutzerWillZuruecksetzen = false;
         }
 
         public void Ausfuehren()

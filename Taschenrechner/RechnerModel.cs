@@ -10,6 +10,8 @@ namespace Taschenrechner
 
         public RechnerModel()
         {
+            ErsteZahl = 0;
+            ZweiteZahl = 0;
             Resultat = 0;
         }
        
