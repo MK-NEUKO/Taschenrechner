@@ -27,31 +27,36 @@ namespace Taschenrechner
                 try
                 {
                     model.ErsteZahl = view.HohleZahlVomBenutzer();
-                    if (benutzerWillBeenden)
-                        break;
-                    if (benutzerWillZuruecksetzen)
-                    {
-                        benutzerWillZuruecksetzen = false;
-                        continue;
-                    }
+                    UeberprüfeBedingungen();
+                    //if (benutzerWillBeenden)
+                    //    break;
+                    //if (benutzerWillZuruecksetzen)
+                    //{
+                    //    benutzerWillZuruecksetzen = false;
+                    //    continue;
+                    //}
  
                     model.Operation = view.HohleOperatorVomBenutzer();
-                    if (benutzerWillBeenden)
-                        break;
-                    if (benutzerWillZuruecksetzen)
-                    {
-                        benutzerWillZuruecksetzen = false;
-                        continue;
-                    }
+                    UeberprüfeBedingungen();
+                    //if (benutzerWillBeenden)
+                    //    break;
+                    //if (benutzerWillZuruecksetzen)
+                    //{
+                    //    benutzerWillZuruecksetzen = false;
+                    //    continue;
+                    //}
 
                     model.ZweiteZahl = view.HohleZahlVomBenutzer();
-                    if (benutzerWillBeenden)
-                        break;
-                    if (benutzerWillZuruecksetzen)
-                    {
-                        benutzerWillZuruecksetzen = false;
-                        continue;
-                    }
+                    UeberprüfeBedingungen();
+                    //if (benutzerWillBeenden)
+                    //    break;
+                    //if (benutzerWillZuruecksetzen)
+                    //{
+                    //    benutzerWillZuruecksetzen = false;
+                    //    continue;
+                    //}
+
+                    model.Berechne();
                 }
                 catch (ArgumentOutOfRangeException)
                 {
@@ -62,11 +67,6 @@ namespace Taschenrechner
                 {
                     view.HinweisArgumentException();
                     continue;
-                }
-
-                try
-                {
-                    model.Berechne();
                 }
                 catch (DivideByZeroException)
                 {
@@ -80,6 +80,17 @@ namespace Taschenrechner
             
 
             view.WarteAufEndeDurchBenutzer();
+        }
+
+        private void UeberprüfeBedingungen()
+        {
+            if (benutzerWillBeenden)
+                break;
+            if (benutzerWillZuruecksetzen)
+            {
+                benutzerWillZuruecksetzen = false;
+                continue;
+            }
         }
 
         public void View_Beenden()
