@@ -4,9 +4,7 @@ namespace Taschenrechner
 {
     class ConsoleView
     {
-        private readonly RechnerModel model;
-
-        public event BeendenEventHandler Beenden;
+        private readonly RechnerModel model;   
         public event ZuruecksetzenEventHandler Zuruecksetzen;
 
         public ConsoleView(RechnerModel model)
@@ -71,8 +69,7 @@ namespace Taschenrechner
                 eingabe = eingabe.ToUpper();
                 if (eingabe == "ENDE")
                 {
-                    Beenden();
-                    return 0;
+                    WarteAufEndeDurchBenutzer();
                 }
                 else if (eingabe == "C")
                 {
@@ -104,8 +101,7 @@ namespace Taschenrechner
                 eingabe = eingabe.ToUpper();
                 if (eingabe == "ENDE")
                 {
-                    Beenden();
-                    return "";
+                    WarteAufEndeDurchBenutzer();
                 }
                 else if (eingabe == "C")
                 {
@@ -145,6 +141,7 @@ namespace Taschenrechner
             Console.Write("Zum Beenden bitte Return drücken!");
             Console.ResetColor();
             Console.ReadLine();
+            Environment.Exit(0);
         }
 
         public void GibResultatAus()

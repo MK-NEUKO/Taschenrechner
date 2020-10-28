@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
+using System.Security.Policy;
 
 namespace Taschenrechner
 {
@@ -6,56 +8,25 @@ namespace Taschenrechner
     {
         private RechnerModel model;
         private ConsoleView view;
-
-        private bool benutzerWillBeenden;
-        private bool benutzerWillZuruecksetzen;
+   
 
         public AnwendungsController(RechnerModel model, ConsoleView view)
         {
             this.model = model;
-            this.view = view;
-            benutzerWillBeenden = false;
-            benutzerWillZuruecksetzen = false;
+            this.view = view;        
         }
 
         public void Ausfuehren()
         {
-            while (!benutzerWillBeenden)
+            while (true)
             {
                 view.ZeigeMenu();
 
                 try
-                {
-                    model.ErsteZahl = view.HohleZahlVomBenutzer();
-                    UeberprüfeBedingungen();
-                    //if (benutzerWillBeenden)
-                    //    break;
-                    //if (benutzerWillZuruecksetzen)
-                    //{
-                    //    benutzerWillZuruecksetzen = false;
-                    //    continue;
-                    //}
- 
-                    model.Operation = view.HohleOperatorVomBenutzer();
-                    UeberprüfeBedingungen();
-                    //if (benutzerWillBeenden)
-                    //    break;
-                    //if (benutzerWillZuruecksetzen)
-                    //{
-                    //    benutzerWillZuruecksetzen = false;
-                    //    continue;
-                    //}
-
-                    model.ZweiteZahl = view.HohleZahlVomBenutzer();
-                    UeberprüfeBedingungen();
-                    //if (benutzerWillBeenden)
-                    //    break;
-                    //if (benutzerWillZuruecksetzen)
-                    //{
-                    //    benutzerWillZuruecksetzen = false;
-                    //    continue;
-                    //}
-
+                {                    
+                    model.ErsteZahl = view.HohleZahlVomBenutzer();                   
+                    model.Operation = view.HohleOperatorVomBenutzer();                   
+                    model.ZweiteZahl = view.HohleZahlVomBenutzer();                  
                     model.Berechne();
                 }
                 catch (ArgumentOutOfRangeException)
@@ -76,32 +47,12 @@ namespace Taschenrechner
                 
                 view.GibResultatAus();
             }
-
-            
-
-            view.WarteAufEndeDurchBenutzer();
-        }
-
-        private void UeberprüfeBedingungen()
-        {
-            if (benutzerWillBeenden)
-                break;
-            if (benutzerWillZuruecksetzen)
-            {
-                benutzerWillZuruecksetzen = false;
-                continue;
-            }
-        }
-
-        public void View_Beenden()
-        {          
-            benutzerWillBeenden = true;
-        }
+        }                
 
         public void View_Zuruecksetzen()
         {
-            Console.Clear();
-            benutzerWillZuruecksetzen = true;
+            Console.Clear();            
+            Ausfuehren();
         }
     }
 }
