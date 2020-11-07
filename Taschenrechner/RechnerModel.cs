@@ -54,22 +54,22 @@ namespace Taschenrechner
         
         public void Berechne()
         {
-            switch (operation)
+            switch (Operation)
             {
                 case "+":
-                    resultat = Addiere(ersteZahl, zweiteZahl);
+                    resultat = Addiere(ErsteZahl, ZweiteZahl);
                     break;
 
                 case "-":
-                    resultat = Subtrahiere(ersteZahl, zweiteZahl);
+                    resultat = Subtrahiere(ErsteZahl, ZweiteZahl);
                     break;
 
                 case "/":
-                    resultat = Dividiere(ersteZahl, zweiteZahl);
+                    resultat = Dividiere(ErsteZahl, ZweiteZahl);
                     break;
 
                 case "*":
-                    resultat = Multipliziere(ersteZahl, zweiteZahl);
+                    resultat = Multipliziere(ErsteZahl, ZweiteZahl);
                     break;
             }
         }
