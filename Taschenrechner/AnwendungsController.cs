@@ -8,7 +8,6 @@ namespace Taschenrechner
     {
         private RechnerModel model;
         private ConsoleView view;
-   
 
         public AnwendungsController(RechnerModel model, ConsoleView view)
         {
@@ -18,41 +17,38 @@ namespace Taschenrechner
 
         public void Ausfuehren()
         {
-            while (true)
+            do
             {
                 view.ZeigeMenu();
 
                 try
-                {                    
-                    model.ErsteZahl = view.HohleZahlVomBenutzer();                   
-                    model.Operation = view.HohleOperatorVomBenutzer();                   
-                    model.ZweiteZahl = view.HohleZahlVomBenutzer();                  
-                    model.Berechne();
+                {
+                    if (view.ZahlHolen)
+                        model.ErsteZahl = view.HohleZahlVomBenutzer();
+                    if (view.OperatorHolen)
+                        model.Operation = view.HohleOperatorVomBenutzer();
+                    if (view.ZahlHolen)
+                        model.ZweiteZahl = view.HohleZahlVomBenutzer();
+                    if (view.Berechnen)
+                    {
+                        model.Berechne();
+                        view.GibResultatAus(model);
+                    }
+
                 }
                 catch (ArgumentOutOfRangeException)
                 {
-                    view.HinweisArgumentOutOfRangeException();
-                    continue;
-                }
-                catch (ArgumentException)
-                {
-                    view.HinweisArgumentException();
-                    continue;
-                }
+                    view.HinweisArgumentOutOfRangeException();                  
+                }                              
                 catch (DivideByZeroException)
                 {
-                    view.HinweisDivideByZeroException();
-                    continue;
+                    view.HinweisDivideByZeroException();                   
                 }
-                
-                view.GibResultatAus();
-            }
-        }                
 
-        public void View_Zuruecksetzen()
-        {
-            Console.Clear();            
-            Ausfuehren();
-        }
+                if(view.Zuruecksetzen)
+                    view.KonsoleZuruecksetzen();
+
+            } while (view.BerechnungWiederholen);           
+        }                      
     }
 }

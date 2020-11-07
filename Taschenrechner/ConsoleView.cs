@@ -3,14 +3,27 @@
 namespace Taschenrechner
 {
     class ConsoleView
-    {
-        private readonly RechnerModel model;   
-        public event ZuruecksetzenEventHandler Zuruecksetzen;
+    {      
+        private bool zahlHolen;
+        private bool operatorHolen;
+        private bool berechnen;
+        private bool berechnungWiederholen;
+        private bool zuruecksetzen;
 
-        public ConsoleView(RechnerModel model)
+        public ConsoleView()
         {
-            this.model = model;
+            zahlHolen = true;
+            operatorHolen = true;
+            berechnen = true;
+            berechnungWiederholen = true;
+            zuruecksetzen = false;
         }
+
+        public bool ZahlHolen { get => zahlHolen; }
+        public bool OperatorHolen { get => operatorHolen; }
+        public bool Berechnen { get => berechnen; }
+        public bool BerechnungWiederholen { get => berechnungWiederholen; }
+        public bool Zuruecksetzen { get => zuruecksetzen; }
 
         public void ZeigeMenu()
         {
@@ -42,6 +55,16 @@ namespace Taschenrechner
             Console.WriteLine();
         }
 
+        public void KonsoleZuruecksetzen()
+        {
+            zahlHolen = true;
+            operatorHolen = true;
+            berechnen = true;
+            berechnungWiederholen = true;
+            zuruecksetzen = false;
+            Console.Clear();
+        }
+
         public void HinweisArgumentOutOfRangeException()
         {
             Console.WriteLine();
@@ -56,7 +79,7 @@ namespace Taschenrechner
         public double HohleZahlVomBenutzer()
         {
             string eingabe;
-            double zahl = 0;
+            double zahl;
             bool wiederholen;
 
             do
@@ -70,10 +93,11 @@ namespace Taschenrechner
                 if (eingabe == "ENDE")
                 {
                     WarteAufEndeDurchBenutzer();
+                    return 0;
                 }
                 else if (eingabe == "C")
                 {
-                    Zuruecksetzen();
+                    ZuruecksetzenVorbereiten();
                     return 0;
                 }
                 else if (!double.TryParse(eingabe, out zahl))
@@ -102,10 +126,11 @@ namespace Taschenrechner
                 if (eingabe == "ENDE")
                 {
                     WarteAufEndeDurchBenutzer();
+                    return "";
                 }
                 else if (eingabe == "C")
                 {
-                    Zuruecksetzen();
+                    ZuruecksetzenVorbereiten();
                     return "";
                 }
                 else if (eingabe == "+" || eingabe == "-" || eingabe == "/" || eingabe == "*")
@@ -118,6 +143,14 @@ namespace Taschenrechner
             } while (wiederholen);
 
             return eingabe;
+        }
+
+        private void ZuruecksetzenVorbereiten()
+        {
+            zahlHolen = false;
+            operatorHolen = false;
+            berechnen = false;
+            zuruecksetzen = true;
         }
        
         private void HinweisTryParseFehlgeschlagen()
@@ -136,15 +169,19 @@ namespace Taschenrechner
 
         public void WarteAufEndeDurchBenutzer()
         {
+            zahlHolen = false;
+            operatorHolen = false;
+            berechnen = false;
+            zuruecksetzen = false;
+            berechnungWiederholen = false;
             Console.BackgroundColor = ConsoleColor.DarkBlue;
             Console.WriteLine();
             Console.Write("Zum Beenden bitte Return drücken!");
             Console.ResetColor();
             Console.ReadLine();
-            Environment.Exit(0);
         }
 
-        public void GibResultatAus()
+        public void GibResultatAus(RechnerModel model)
         {
             switch (model.Operation)
             {

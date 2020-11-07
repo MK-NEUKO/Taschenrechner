@@ -4,40 +4,33 @@ namespace Taschenrechner
 {
     public class RechnerModel
     {
-        private double _ersteZahl;
-        private double _zweiteZahl;
-        private string _operation;
+        private double ersteZahl;
+        private double zweiteZahl;
+        private string operation;
+        private double resultat;
 
         public RechnerModel()
         {
-            ErsteZahl = 0;
-            ZweiteZahl = 0;
-            Resultat = 0;
+            ersteZahl = 0;
+            zweiteZahl = 0;
+            resultat = 0;
         }
-       
-        public double Resultat { get; private set; }
+
+        public double Resultat { get => resultat; }
         public string Operation
         {
-            get { return _operation; }
-            set
-            {
-                if (value == "+" || value == "-" || value == "/" || value == "*")
-                {
-                    _operation = value;
-                }
-                else
-                    throw new ArgumentException("Gültige Operatoren sind (+ | - | * | / )");
-            }
+            get { return operation; }
+            set { operation = value; }            
         }
            
         public double ErsteZahl
         {
-            get { return _ersteZahl; }
+            get { return ersteZahl; }
             set 
             {
                 if (value >= -10.0 && value <= 100.0)
                 {
-                    _ersteZahl = value;
+                    ersteZahl = value;
                 }
                 else
                     throw new ArgumentOutOfRangeException("Wertebereich = -10 bis 100");
@@ -46,36 +39,37 @@ namespace Taschenrechner
 
         public double ZweiteZahl
         {
-            get { return _zweiteZahl; }
+            get { return zweiteZahl; }
             set
             {
                 if (value >= -10.0 && value <= 100.0)
                 {
-                    _zweiteZahl = value;
+                    zweiteZahl = value;
                 }
                 else
                     throw new ArgumentOutOfRangeException("Wertebereich = -10 bis 100");           
             }
         }
 
+        
         public void Berechne()
         {
-            switch (Operation)
+            switch (operation)
             {
                 case "+":
-                    Resultat = Addiere(ErsteZahl, ZweiteZahl);
+                    resultat = Addiere(ersteZahl, zweiteZahl);
                     break;
 
                 case "-":
-                    Resultat = Subtrahiere(ErsteZahl, ZweiteZahl);
+                    resultat = Subtrahiere(ersteZahl, zweiteZahl);
                     break;
 
                 case "/":
-                    Resultat = Dividiere(ErsteZahl, ZweiteZahl);
+                    resultat = Dividiere(ersteZahl, zweiteZahl);
                     break;
 
                 case "*":
-                    Resultat = Multipliziere(ErsteZahl, ZweiteZahl);
+                    resultat = Multipliziere(ersteZahl, zweiteZahl);
                     break;
             }
         }
